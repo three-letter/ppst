@@ -15,14 +15,3 @@
 //= require twitter/bootstrap
 //= require_tree .
 
-$(document).ready(function(){
-  
-  // share cast after upload with ajax
-  $("#cast_share_btn").click(function(){
-    //var html = '<div style="width:200px;" class="progress progress-striped active"><div class="bar" style="width: 100%;">视频上传中,请稍后...</div></div>';
-    //$("#cast_upload_info").html(html);
-    //alert($("#cast_upload_info").html());
-    $("#cast_share_form").submit();
-  });
-
-});
