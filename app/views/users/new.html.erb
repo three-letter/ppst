@@ -1,0 +1,26 @@
+<% content_for :title do %>
+  注册
+<% end %>
+
+
+<%= form_for @user, :html => {:class => "login"} do |f| %>
+  <div class="username_box">
+    <%= f.label :name, "用户名" %>
+    <%= f.text_field :name, :placeholder => "请输入注册用户名" %>
+    <font style="color:red;font-size:15px;"><%= @user.errors[:name][0].to_s %></font>
+  </div>
+  <div class="pwd_box">
+    <%= f.label :pwd, "密码" %>
+    <%= f.password_field :pwd, :placeholder => "请输入注册密码" %>
+    <font style="color:red;font-size:15px;"><%= @user.errors[:pwd][0].to_s %></font>
+  </div>
+  <div class="pwd_box">
+    <%= f.label :pwd_confirmation, "确认密码" %>
+    <%= f.password_field :pwd_confirmation, :placeholder => "请再次输入注册密码" %>
+  </div>
+  <div class="submit_box">
+    <%= f.submit "注 册", :class => "btn btn-large btn-block btn-primary" %>
+  </div>
+
+<% end %>
+

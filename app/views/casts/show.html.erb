@@ -1,0 +1,83 @@
+<% content_for :title do %>
+分享视播
+<% end %>
+
+<% content_for :header do %>
+  <link href="/assets/player.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/assets/jquery.jplayer.min.js" ></script>
+<% end %>
+
+<div class="profile_box span9">
+
+  <div class="player">
+    <%= render "player" %>
+    
+    <div class="row cast_show">
+      <div class="cast_user">
+        <img src="<%= @cast.user.avatar_type(:small) %>" style="border-radius: 50% 50% 50% 50%" />
+      </div>
+      <div class="cast_info">
+        <div class="cast_title">
+          <%= @cast.title %>
+        </div>
+        <div class="cast_time">
+          <blockquote class="pull-right">
+            <small><%= @cast.user.name %>于<%= time_ago_in_words(@cast.created_at) %>前分享</small>
+          </blockquote>
+        </div>
+       </div>
+    </div>
+    <hr>
+    <%= render partial: "comments", locals: { comments: @cast.comments } %>
+  </div>
+
+  <a href="#play-pay" id="play-a" role="button" class="btn" data-toggle="modal" style="display:none">Pay</a>
+  <div id="play-pay" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      免费试看
+    </div>
+    <div class="modal-body">
+      <p>亲~ 该视频只能试看<%= @cast.free_time %>分钟 ，若需完整观看，请付费！</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Cancle</button>
+      <button class="btn btn-primary">Go To Pay</button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+<script type="text/javascript">
+
+
+  $("#jquery_jplayer_1").jPlayer({
+    ready: function () {
+      $(this).jPlayer("setMedia", {
+        m4v: "<%= @cast.video.url %>"
+       // poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+      }).jPlayer("load");
+    },
+    swfPath: "/assets",
+    supplied: "m4v",
+    size: {
+      width: "640px",
+      height: "360px",
+      cssClass: "jp-video-360p"
+    }
+  });
+
+
+$("#jquery_jplayer_1").bind($.jPlayer.event.timeupdate, function(event){
+    var cur = event.jPlayer.status.currentTime;
+    var free = <%= @cast.free_time %>;
+  if (cur > free * 60 ){
+    $(this).jPlayer("pause", 0);
+    $("#play-a").click();
+  }
+});
+
+</script>

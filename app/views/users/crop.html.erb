@@ -1,0 +1,70 @@
+<% content_for :title do %>
+裁剪头像
+<% end %>
+
+<% content_for :header do %>
+
+  <script src="/assets/jquery.Jcrop.min.js" type="text/javascript"></script>
+  <link href="/assets/jquery.Jcrop.css" media="all" rel="stylesheet" type="text/css" />
+
+<% end %>
+<script type="text/javascript" charset="utf-8">
+  jQuery(function($){
+      $('#cropbox').Jcrop({
+onChange: update_crop,
+onSelect: update_crop,
+setSelect: [30, 30, 100, 100],
+aspectRatio: 1
+});
+      });
+
+function update_crop(coords) {
+  var rx = <%= User::AVATAR_SW %>/coords.w;
+  var ry = <%= User::AVATAR_SH %>/coords.h;
+  var ratio = <%= @user.avatar_geometry(:original).width %> / <%= @user.avatar_geometry(:large).width %>;
+  $('#preview').css({
+width: Math.round(rx * <%= @user.avatar_geometry(:large).width %>) + 'px',
+height: Math.round(ry * <%= @user.avatar_geometry(:large).height %>) + 'px',
+marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+marginTop: '-' + Math.round(ry * coords.y) + 'px'
+});
+$("#crop_x").val(Math.round(coords.x * ratio));
+$("#crop_y").val(Math.round(coords.y * ratio));
+$("#crop_w").val(Math.round(coords.w * ratio));
+$("#crop_h").val(Math.round(coords.h * ratio));
+}
+</script>
+
+<div class='profile_box span9'>
+  <div class='span6'>
+    拖动图片中的方框进行裁剪
+    <hr>
+    <div>
+      <%= image_tag @user.avatar.url(:large), :id => 'cropbox' %>
+    </div>
+    <div>
+      <%= form_for @user, :class => "form-horizontal" do |f| %>
+        <div class="control-group">
+          <label class="control-label" for="user_name"></label>
+          <div class="controls">
+            <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+              <%= f.hidden_field attribute, :id => attribute %>
+            <% end %>
+          </div>
+        </div>
+        <div class="form-actions">
+          <%= f.submit "裁剪", :class => "btn btn-primart" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class='span2' style="margin-top:0px;">
+    这是你在网站的头像图标
+    <hr>
+    <div id="div-preview" style="overflow:hidden;width:<%= User::AVATAR_SW %>px;height:<%= User::AVATAR_SH %>px">
+      <%= image_tag @user.avatar.url(:large), :id => "preview" %>
+    </div>
+  </div>
+</div>
+<hr>
+

@@ -1,0 +1,9 @@
+
+<% if @comment.errors.blank? %>
+  var html = '<div class="alert alert-success"><button class="close" data-dismiss="alert" type="button">×</button><%= flash[:notice_comment] %></div>';
+  $("#cmt_area").append("<%= escape_javascript(render(:partial => "comment", :locals => { :comment => @comment })) %>");
+  $("#comment_content").val("");
+<% else %>
+  var html = '<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button><%= @comment.errors[:content][0].to_s %></div>';
+<% end %>
+$("#msg").html(html);

@@ -1,0 +1,9 @@
+<div id="cmt_area">
+  <%= render partial: "comments/comment", collection: comments %>
+</div>
+
+<% if sign_in? %>
+  <%= render "comments/new" %>
+<% else %>
+  <a href="/login">登陆</a>
+<% end %>

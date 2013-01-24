@@ -1,0 +1,4 @@
+RECIPES
+["controllers", "frontend", "gems", "models", "setup", "testing", "views"]
+PREFERENCES
+{:dev_webserver=>"webrick", :prod_webserver=>"thin", :database=>"postgresql", :templates=>"erb", :unit_test=>"rspec", :integration=>"none", :fixtures=>"factory_girl", :frontend=>"bootstrap", :bootstrap=>"less", :email=>"none", :authentication=>"none", :authorization=>"none", :form_builder=>"simple_form"}

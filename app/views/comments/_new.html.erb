@@ -1,0 +1,12 @@
+
+<div id="msg" style="margin-bottom:30px;margin-top:20px;"></div>
+
+<%= form_for @cast.comments.new, url: cast_comments_path(@cast), remote: true do |f| %>
+  <div>
+    <%= f.text_area :content, rows: 3, class: "input-xxlarge" %>
+  </div>
+
+  <div style="margin-right:100px;">
+    <%= f.submit "评论", class: "btn btn-primary pull-right" %>
+  </div>
+<% end %>

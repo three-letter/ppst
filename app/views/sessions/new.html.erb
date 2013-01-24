@@ -1,0 +1,22 @@
+<% content_for :title do %>
+  登陆
+<% end %>
+
+
+<%= form_tag signin_path, :class => "login" do %>
+  
+  <div class="username_box">
+    <%= label_tag :name, "用户名" %>
+    <%= text_field_tag :name, "", :placeholder => "请输入登陆用户名" %>
+    <p style="color:red;font-size:15px;"><%= flash[:login] %></p>
+  </div>
+  <div class="pwd_box">
+    <%= label_tag :pwd, "密码" %>
+    <%= password_field_tag :pwd, "", :placeholder => "请输入登陆密码" %>
+  </div>
+  <div class="submit_box">
+    <%= submit_tag "登 陆", :class => "btn btn-large btn-block btn-primary" %>
+  </div>
+
+<% end %>
+

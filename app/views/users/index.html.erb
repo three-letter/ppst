@@ -1,0 +1,32 @@
+<% content_for :title do %>
+  首页 
+<% end %>
+
+<% if flash[:notice] %>
+  <div class='alert alert-success'>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<div class="span9">
+  <div class="poster span4">
+    
+    <div class="avatar_box">
+      <div class="avatar_green">
+        <img src="<%= current_user.avatar_type(:small) %>"/ >
+      </div>
+    </div>
+
+    <div class="casts">
+      未完待续...
+    </div>
+  </div>
+  <div class="poster span4">
+    <div class="avatar_box">
+      <div class="avatar_red">
+        <img src="<%= current_user.avatar_type(:small) %>"/ >
+      </div>
+    </div>
+  </div>
+</div>

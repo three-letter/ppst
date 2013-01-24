@@ -1,0 +1,59 @@
+<div class="profile_box span8">
+  <ul class="nav nav-tabs">
+    <li class="active">  <a href="#">我的主页</a> </li>
+    <li><a href="#">视播分享</a></li>
+    <li><a href="#">视播交易</a></li>
+  </ul>
+  <div class="span6">
+    <form class="form-horizontal" style="margin-bottom: 0px;">
+      <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
+        <div class="controls">
+          <label class="control-label">第 <%= @user.id %> 位 会员</label>
+        </div>
+      </div>
+      <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
+        <label class="control-label">用户名:</label>
+        <div class="controls">
+          <label class="control-label"><%= @user.name %></label>
+        </div>
+      </div>
+      <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
+        <label class="control-label">交易金额:</label>
+        <div class="controls">
+          <label class="control-label"><%= 0 %></label>
+        </div>
+      </div>
+      <div class="control-group" style="margin-bottom:2px;border-bottom: 1px dashed #EEEEEE;">
+        <label class="control-label">注册时间:</label>
+        <div class="controls">
+          <label class="control-label"><%= @user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="span1">
+    <img src="<%= @user.avatar_type(:large) %>" style="width:<%= User::AVATAR_LW %>px;height:<%= User::AVATAR_LH %>px;border-radius:10px 10px 10px 10px" />
+  </div>
+</div>
+
+<div class="profile_box span8">
+  最新视播分享
+  <hr>
+  <% @casts.each do |cast| %>
+    <div style="border-bottom: 1px dashed #EEEEEE;margin-bottom:10px;">
+      <%= time_ago_in_words(cast.created_at) %>前
+      <p style="margin-bottom:4px;"><a href="<%= cast_path cast %>"><%= cast.title %></a></p>
+    </div>
+  <% end %>
+</div>
+
+<div class="profile_box span8">
+  最新评论
+  <hr>
+  <% @comments.each do |comment| %>
+    <div style="border-bottom: 1px dashed #EEEEEE;margin-bottom:10px;">
+      <a href="<%= cast_path(comment.cast) %>"><%= comment.cast.title %></a>, <%= time_ago_in_words(comment.created_at) %>前
+      <p style="margin-bottom:4px;"><%= comment.content %></p>
+    </div>
+  <% end %>
+</div>

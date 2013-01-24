@@ -1,0 +1,20 @@
+
+<div class="row cast_show" style="border-bottom: 2px dashed #EEEEEE;">
+  <div class="cast_user">
+    <%= image_tag comment.user.avatar_type(:small), class: "avatar", alt: comment.user.name %>
+  </div>
+
+  <div class="cast_info">
+    <div class="cast_title">
+      <%= comment.content %>
+    </div>
+
+    <div class="cast_time">
+      <blockquote class="pull-right">
+        <small><%= comment.user.name %>, <%= time_ago_in_words(comment.created_at) %>前</small>
+      </blockquote>
+    </div>
+  </div>
+
+</div>
+
