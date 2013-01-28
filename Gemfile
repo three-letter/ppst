@@ -4,6 +4,7 @@ gem 'rails', '3.2.11'
 
 gem "paperclip", "~> 3.0"
 gem "pry", :group => :development
+gem "qiniu-rs"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
