@@ -1,11 +1,7 @@
-<% content_for :head do %>
-  <%= javascript_include_tag "swfobject" %>
-  <%= javascript_include_tag "swfobject2" %>
-<% end %>
 
 <div class="profile_box span9">
 
-  <%= form_for @cast, :html => { :id => "cast_share_form", :class => "simple_form form-horizontal", :multipart => true } do |f| %>
+  <%= form_for @cast, :html => { :id => "cast_share_form", :remote => true, :class => "simple_form form-horizontal", :multipart => true } do |f| %>
     <fieldset>
 
       <legend>分享视播</legend>
@@ -43,115 +39,12 @@
         </div>
       </div>
 
-      <div class="control-group">
-        <%= f.label :video, "上传视频", :class => "control-label" %>
-        <div class="controls">
-          <div id="ku6uploader"></div>
-           <div>
-             <p style="color:red" id="upload_vid"><%= @cast.errors[:video][0].to_s %></p>
-           </div>
-          </div>
+        <div class="form-actions">
+          <%= f.submit '上传', :id => "cast_share_btn", :class => 'btn btn-primary' %>
+          <%= link_to '取消', casts_path, :class => 'btn' %>
+        </div>
 
-          <div class="form-actions">
-            <%= f.submit '上传', :id => "cast_share_btn", :class => 'btn btn-primary' %>
-            <%= link_to '取消', casts_path, :class => 'btn' %>
-          </div>
-
-        </fieldset>
-      <% end %>
-    </div>
-
-
-          <div style="display:none">
-            <%= form_tag url_for({:controller => "casts", :action => "upload"}), :remote => true, :id => "frm" do %>
-              VID:<br>
-              <input  id="vid" type="text" value="" name="vid" readonly="true"/><br>
-              category id:<br>
-              <input  type="text" value="1" name="cid"/><br>   
-              title:<br>
-              <input  id="vtitle" type="text" value="" name="vtitle"/><br>
-              <input  type="submit" /><br>
-              <input name='method' value='VideoAdd' type='hidden'/>
-            <% end%>
-            </div>
-
-    <script type="text/javascript">
-
-      var js4swf = {
-
-onInit: function(list)
-        {      
-          this.showMessage('init', list);
-        },
-onSelect: function(files)
-          {
-            // 选中文件后调用, 返回文件列表
-            // [{file}, {file}]
-            this.showMessage('select', files);
-          },
-onSid: function(evt)
-       {
-         // 获得 sid 后返回, 更新 sid 用 (key, sid, name, type, size)	
-         $('#vtitle').val(evt.name);		
-         //向ku6vms添加临时文件vid
-         $.get("http://v.ku6vms.com/phpvms/new_video/temp_video",
-             { ku6vid: evt.vid}
-             );
-         this.showMessage('sid', evt);
-         this.showMessage('name',evt.name);        
-       },
-onStart: function()
-         {
-           // 开始上传 (选择文件后自动开始)
-           this.showMessage('start');
-         },
-onCancel: function()
-          {
-            // 上传取消事件
-            this.showMessage('cancel');
-          },
-onProgress: function(evt)
-            {
-              // 上传进度事件 (bytesLoaded, bytesTotal, speed) m=1 时没有这事件
-              this.showMessage('progress', evt);
-            },
-onComplete: function(evt)
-            {
-              // 上传完成事件 (包含文件信息和完成后返回数据(data))
-              $('#vid').val(evt.vid);
-              //document.getElementById('frm').submit();
-              this.showMessage('complete', evt);
-              // 如果上传ku6状态正确，更新title(上传文件名字)、vid(视频id)、cid(分类id,本示例默认是1,即用户的默认分类)到ku6vms
-              if (evt.status==1)
-              {
-                $("#frm").submit();	
-              }        
-            },
-onWarn: function(evt)
-        {
-          // 报错事件 (key, message)
-          //this.showMessage('warn', evt);
-          alert(evt.msg);
-        },
-showMessage: function()
-             {
-               //console.log(arguments);
-             }
-      };
-
-function get_ku6_upload_flash() {
-  var resultRes = '<%= get_result %>';
-  resultRes = resultRes.replace(new RegExp("&quot;", "gm"), "\"");
-  resultRes = resultRes.replace(new RegExp("&amp;", "gm"), "&");
-  var result = eval("("+resultRes+")");  
-  $('#ku6uploader').attr('style','visibility: visible;');   
-  $('#loading').hide();      
-  var flashvars = { m: "1", u: result.data.userid , ctime: result.data.passport_ctime , sig: result.data.passport_sig, c: "vms", t: "1", n: "js4swf", k: "190000" ,ms:"39",s: "8000000"};
-  var params = { allowScriptAccess: "always" , wmode: "transparent"};
-  var attributes = { };
-  swfobject.embedSWF(result.data.flashurl, "ku6uploader", "450", "25", "10.0.0", null, flashvars, params, attributes);
-}
-
-get_ku6_upload_flash();
-</script>
+      </fieldset>
+    <% end %>
+  </div>
 

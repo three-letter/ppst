@@ -8,6 +8,7 @@
     <%= flash[:notice] %>
   </div>
 <% end %>
+<%= Qiniu::RS.stat("ppst", "#{current_user.id}-253-carrierwave-file-uploads.mp4") %>
 
 <div class="span9">
   <% @casts.each do |cast| %>
