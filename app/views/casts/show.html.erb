@@ -57,11 +57,12 @@
   $("#jquery_jplayer_1").jPlayer({
     ready: function () {
       $(this).jPlayer("setMedia", {
-        m4v: "<%= @cast.video.url %>"
+        m4v: "http://player.ku6.com/refer/rxy28yFUOBrkHLL2xwlzcg../v.swf" //"<%= @cast.video.url %>"
        // poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
       }).jPlayer("load");
     },
     swfPath: "/assets",
+    solution: "flash, html",
     supplied: "m4v",
     size: {
       width: "640px",

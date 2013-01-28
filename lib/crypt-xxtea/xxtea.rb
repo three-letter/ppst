@@ -1,4 +1,9 @@
   class XXTEA
+
+    URL  = "http://v.ku6vms.com/v3/api"
+    SN   = "27bf6226213cf288dfbf62ffc02bad4f"
+    SKEY = "b6914f0cdacde53bfe6751ac05880111"
+
     DELTA = 0x9E3779B9
 
     def initialize(new_key)
@@ -134,4 +139,11 @@
       longs_to_str(v, true)
     end
 
+    def self.encrypt_ku6
+      time = 1359353323; #Time.now.to_i 
+      p, k = time, encrypt(SKEY,time.to_s)
+    end
+
   end
+
+  puts XXTEA.encrypt_ku6
