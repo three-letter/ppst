@@ -8,10 +8,6 @@
     <%= flash[:notice] %>
   </div>
 <% end %>
-<%= Qiniu::RS.batch_get("ppst", ["#{current_user.id}-253-carrierwave-file-uploads.mp4"]) %>
-<%= Qiniu::RS.generate_download_token({:expires_in => 3600, :pattern => "*/*"}) %>
-<%= Qiniu::RS.stat("ppst", "1-nil_podcast_1.m4a") %>
-<%= Qiniu::RS.stat("ppst", "meppo.jpg") %>
 
 
 <div class="span9">

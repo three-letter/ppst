@@ -1,6 +1,7 @@
-<%= form_tag url_for(:controller => "casts", :action => "create"), :multipart => true, :remote => true do %>
+<%= form_tag url_for(:controller => "casts", :action => "upload"), :multipart => "true", :remote => "true" do %>
   <%= file_field_tag :upload %>
-  <%= submit_tag "Upload" %>
+  <p id="upload_info" style="color:red;"></p>
+  <%= button_tag "Upload" %>
 <% end %>
 
 

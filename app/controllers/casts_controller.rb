@@ -27,11 +27,22 @@ class CastsController < ApplicationController
 
 
   def upload
-    unless params[:file].blank?
-      result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
-                                     :file       => params[:upload].tempfile.path,
-                                     :bucket     => "ppst",
-                                     :key        => "#{current_user.id}-#{params[:upload].original_filename}"
+    if params[:upload].blank?
+      flash[:notice_upload] = "请选择上传文件"
+    else
+      #begin
+        #result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
+        #                               :file       => params[:upload].tempfile.path,
+        #                               :bucket     => "ppst",
+        #                               :key        => "#{current_user.id}-#{params[:upload].original_filename}"
+        #flash[:notice_upload] = "上传成功"
+      #rescue
+      flash[:notice_upload] = "上传失败"
+        #flash[:notice_upload] = "上传失败"
+      #end
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
