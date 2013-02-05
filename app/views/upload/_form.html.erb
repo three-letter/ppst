@@ -1,15 +1,15 @@
-<%= form_for url_for(:controller => "casts", :action => "upload"), :html => { :multipart => true, :id => "fileupload" } do |f| %>
+<%= form_tag url_for(:controller => "casts", :action => "upload"), :multipart => true, :id => "fileupload", :class => "simple_form form-horizontal", :style => "margin-bottom: -30px;" do %>
   <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-  <div class="row fileupload-buttonbar">
-    <div class="span7">
-      <!-- The fileinput-button span is used to style the file input field as button -->
+  <div class="control-group">
+    <%= label_tag :title, "上传视频", :class => "control-label" %>
+    <div class="controls">
       <span class="btn btn-success fileinput-button">
         <i class="icon-plus icon-white"></i>
         <span>选择视频</span>
-        <%= f.file_field :upload %>
+        <%= file_field_tag :upload %>
       </span>
     </div>
-  </div>
+   </div>
   <!-- The loading indicator is shown during image processing -->
   <div class="fileupload-loading"></div>
   <br>

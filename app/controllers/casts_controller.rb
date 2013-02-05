@@ -27,22 +27,12 @@ class CastsController < ApplicationController
 
 
   def upload
-    if params[:upload].blank?
-      flash[:notice_upload] = "请选择上传文件"
-    else
-      #begin
-        #result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
-        #                               :file       => params[:upload].tempfile.path,
-        #                               :bucket     => "ppst",
-        #                               :key        => "#{current_user.id}-#{params[:upload].original_filename}"
-        #flash[:notice_upload] = "上传成功"
-      #rescue
-      flash[:notice_upload] = "上传失败"
-        #flash[:notice_upload] = "上传失败"
-      #end
-    end
+    @result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
+                                    :file       => params[:upload].tempfile.path,
+                                    :bucket     => "ppst",
+                                    :key        => "#{current_user.id}-#{params[:upload].original_filename}"
     respond_to do |format|
-      format.js
+      format.json { render json: @result }
     end
   end
 
@@ -53,9 +43,9 @@ class CastsController < ApplicationController
                                     :expires_in           =>  60 * 30,
                                     :callback_url         =>  "",
                                     :callback_body_type   =>  "application/json",
-                                    :customer             =>  current_user.id.to_s,
-                                    :escape               =>  1,
-                                    :async_options        =>  "avthumb/mp4"
+                                    :customer             =>  current_user.id.to_s
+                                    #:escape               =>  1,
+                                    #:async_options        =>  "avthumb/mp4"
   end
 
 end

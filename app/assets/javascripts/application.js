@@ -13,11 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require jquery.Jcrop.min
-//= require jquery.jplayer.min
+//= require jquery-fileupload
 // require_tree .
 
-$(document).ready(function(){
-  
-
-});
