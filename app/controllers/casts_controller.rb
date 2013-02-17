@@ -27,12 +27,12 @@ class CastsController < ApplicationController
 
 
   def upload
-    @result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
-                                    :file       => params[:upload].tempfile.path,
-                                    :bucket     => "ppst",
-                                    :key        => "#{current_user.id}-#{params[:upload].original_filename}"
+    #@result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
+    #                                :file       => params[:upload].tempfile.path,
+    #                                :bucket     => "ppst",
+    #                                :key        => "#{current_user.id}-#{params[:upload].original_filename}"
     respond_to do |format|
-      format.json { render json: @result }
+      format.json { render json: video_to_json(params[:upload]) }
     end
   end
 
@@ -48,4 +48,16 @@ class CastsController < ApplicationController
                                     #:async_options        =>  "avthumb/mp4"
   end
 
+  def video_to_json file
+    js ={ 
+      "files" => [
+        {
+          "name" => file.original_filename,
+          "size" => file.size 
+        }
+      ]
+    }
+    js = JSON js
+    binding.pry
+  end
 end
