@@ -1,4 +1,3 @@
-//= require jquery.jplayer.min
 
 grabVideoUrl = ->
   $("meta[name=url-token]").attr("content")

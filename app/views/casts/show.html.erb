@@ -47,6 +47,13 @@
 
 </div>
 
-
-
-
+<script type="text/javascript">
+  $("#jquery_jplayer_1").bind($.jPlayer.event.timeupdate, function(event){
+    var free_time = <%= @cast.free_time %>;
+    var current_time = event.jPlayer.status.currentTime;
+    if(current_time > free_time * 60){
+      $(this).jPlayer("pause", 0);
+      $("#play-a").click();
+    }
+  }); 
+</script>
