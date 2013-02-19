@@ -1,19 +1,20 @@
-<%= form_tag url_for(:controller => "casts", :action => "upload"), :multipart => true, :id => "fileupload", :class => "simple_form form-horizontal", :style => "margin-bottom: -30px;" do %>
+<%= form_tag url_for(:controller => "casts", :action => "upload"), :multipart => true, :id => "videoupload", :class => "simple_form form-horizontal", :style => "margin-bottom: 0px;" do %>
+  <fieldset>
   <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-  <div class="control-group">
+  <div class="control-group" id="fileupload-choose-area">
     <%= label_tag :title, "上传视频", :class => "control-label" %>
     <div class="controls">
       <span class="btn btn-success fileinput-button">
         <i class="icon-plus icon-white"></i>
         <span>选择视频</span>
-        <%= file_field_tag :upload %>
+        <input multiple="multiple" name="upload" type="file" />
       </span>
     </div>
    </div>
   <!-- The loading indicator is shown during image processing -->
-  <div class="fileupload-loading"></div>
-  <br>
-  <!-- The table listing the files available for upload/download -->
-  <table class="table table-striped"><tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
-  </table>
+  <div class="controls">
+    <div class="files" id="fileupload-area"></div>
+  <p style="color:red"><%= @cast.errors[:url][0].to_s %></p>
+  </div>
+</fieldset>
 <% end %>

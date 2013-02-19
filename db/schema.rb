@@ -11,19 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123025721) do
+ActiveRecord::Schema.define(:version => 20130219091203) do
 
   create_table "casts", :force => true do |t|
     t.integer  "user_id"
-    t.string   "title",              :limit => 32
+    t.string   "title",      :limit => 32
     t.integer  "price"
     t.integer  "free_time"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.string   "video_file_name"
-    t.string   "video_content_type"
-    t.integer  "video_file_size"
-    t.datetime "video_updated_at"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+    t.string   "url"
   end
 
   create_table "comments", :force => true do |t|

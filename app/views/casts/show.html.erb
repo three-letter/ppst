@@ -2,9 +2,8 @@
 分享视播
 <% end %>
 
-<% content_for :header do %>
-  <link href="/assets/player.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="/assets/jquery.jplayer.min.js" ></script>
+<% content_for :head do %>
+  <meta name="url-token" content="<%= @cast.url %>"/>
 <% end %>
 
 <div class="profile_box span9">
@@ -51,33 +50,3 @@
 
 
 
-<script type="text/javascript">
-
-
-  $("#jquery_jplayer_1").jPlayer({
-    ready: function () {
-      $(this).jPlayer("setMedia", {
-        m4v: "http://ppst.qiniudn.com/1-nil_podcast_1.m4a" //"<%= @cast.video.url %>"
-       // poster: "http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
-      }).jPlayer("load");
-    },
-    swfPath: "/assets",
-    supplied: "m4v",
-    size: {
-      width: "640px",
-      height: "360px",
-      cssClass: "jp-video-360p"
-    }
-  });
-
-
-$("#jquery_jplayer_1").bind($.jPlayer.event.timeupdate, function(event){
-    var cur = event.jPlayer.status.currentTime;
-    var free = <%= @cast.free_time %>;
-  if (cur > free * 60 ){
-    $(this).jPlayer("pause", 0);
-    $("#play-a").click();
-  }
-});
-
-</script>
