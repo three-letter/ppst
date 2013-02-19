@@ -40,7 +40,9 @@ class CastsController < ApplicationController
                                     :bucket     => "ppst",
                                     :key        => gen_upload_key
     respond_to do |format|
-      format.json { render json: video_to_json(params[:upload]) }
+      unless @result.blank?
+        format.json { render json: video_to_json(params[:upload]) }
+      end
     end
   end
 
