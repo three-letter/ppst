@@ -1,0 +1,24 @@
+<%= form_tag "http://up.qbox.me/upload", :multipart => true, :id => "videoupload", :class => "simple_form form-horizontal" do %>
+  <fieldset>
+    <%= hidden_field_tag :auth, @upload_auth %>
+    <%= hidden_field_tag :action, @upload_action %>
+    <%= hidden_field_tag :params, @upload_params %>
+    <%= hidden_field_tag :return_url, new_cast_path %>
+    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+    <div class="control-group" id="fileupload-choose-area">
+      <%= label_tag :title, "上传视频", :class => "control-label" %>
+      <div class="controls">
+        <span class="btn btn-success fileinput-button">
+          <i class="icon-plus icon-white"></i>
+          <span>选择视频</span>
+          <input multiple="multiple" name="file" type="file" />
+        </span>
+      </div>
+    </div>
+    <!-- The loading indicator is shown during image processing -->
+    <div class="controls">
+      <div class="files" id="fileupload-area"></div>
+      <p style="color:red"><%= @cast.errors[:url][0].to_s %></p>
+    </div>
+  </fieldset>
+<% end %>

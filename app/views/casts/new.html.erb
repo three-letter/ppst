@@ -1,46 +1,31 @@
 <div class="profile_box span9">
 
   <legend>分享视播</legend>
-  
-  <%= render :partial => "upload/form" %>
 
-  <%= form_for @cast, :html => { :id => "cast_share_form", :class => "simple_form form-horizontal" } do |f| %>
+  <%= form_tag "http://up.qbox.me/upload", :multipart => true, :id => "videoupload", :class => "simple_form form-horizontal" do %>
     <fieldset>
-
-      <%= f.hidden_field :url %>
-
-      <div class="control-group">
-        <%= f.label :title, "标题", :class => "control-label" %>
+      <%= hidden_field_tag :auth, @upload_auth %>
+      <%= hidden_field_tag :action, @upload_action %>
+      <%= hidden_field_tag :return_url, "http://10.10.65.95:3000/casts/new" %>
+      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+      <div class="control-group" id="fileupload-choose-area">
+        <%= label_tag :title, "上传视频", :class => "control-label" %>
         <div class="controls">
-          <%= f.text_field :title, :class => "text_field" %>
-          <p style="color:red"><%= @cast.errors[:title][0].to_s %></p>
+          <span class="btn btn-success fileinput-button">
+            <i class="icon-plus icon-white"></i>
+            <span>选择视频</span>
+            <input id="up_v" value="" name="file" type="file" />
+          </span>
         </div>
       </div>
-
-      <div class="control-group">
-        <%= f.label :price, "价格", :class => "control-label" %>
-        <div class="controls">
-          <%= f.select :price, options_for_select({"免费" => 0 , "1￥" => 1, "5￥" => 5, "10￥" => 10}, 1) %>
-        </div>
+      <!-- The loading indicator is shown during image processing -->
+      <div class="controls">
+        <div class="files" id="fileupload-area"></div>
+        <p style="color:red"><%= @cast.errors[:url][0].to_s %></p>
       </div>
-
-
-      <div class="control-group">
-        <%= f.label :free_time, "试看时间", :class => "control-label" %>
-        <div class="controls">
-          <%= f.text_field :free_time, :value => "10", :class => "text_field" %>
-          <p style="color:red"><%= @cast.errors[:free_time][0].to_s %></p>
-        </div>
-      </div>
-
-
-      <div class="form-actions">
-        <%= f.submit '上传', :id => "cast_share_btn", :class => 'btn btn-primary' %>
-        <%= link_to '取消', casts_path, :class => 'btn' %>
-      </div>
-
     </fieldset>
   <% end %>
+
 </div>
 
 
@@ -63,15 +48,38 @@
   </div>
 </script>
 
+<script>
+    var fileUploadErrors = {
+          maxFileSize: 'File is too big',
+              minFileSize: 'File is too small',
+                  acceptFileTypes: 'Filetype not allowed',
+                      maxNumberOfFiles: 'Max number of files exceeded',
+                          uploadedBytes: 'Uploaded bytes exceed file size',
+                              emptyResult: 'Empty file upload result'
+                                };
+                              </script>
+
 <script type="text/javascript" charset="utf-8">
   $(function () {
+    $("#up_v").change(function(){
       // Initialize the jQuery File Upload widget:
+      $('#videoupload').fileupload();
 
+      $('#videoupload').fileupload('option', {
+        maxFileSize: 1000,
+        formData: function(form){
+          var data = from.serializeArray();
+          data.push({name: 'file', value: this.files[0]});
+          return data;
+        }
+      });
+      
       $('#videoupload').fileupload({
         dataType: "json",
         add: function(e,t){
+          alert(locale.fileupload.errors[t.files[0].error]);
           var n,r;
-          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
+          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.form.submit()):alert("只支持mp4格式")
         },
         progress: function(e,t){
           var progress = parseInt(t.loaded / t.total * 100, 10);
@@ -81,6 +89,10 @@
           $('.progress .bar').css('width',100 + '%');
           $("#cast_url").val(t.result["key"]);
         }
-    });
-  });
+     });
+
+   });
+      
+ });
 </script>
+
