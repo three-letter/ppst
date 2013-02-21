@@ -1,5 +1,6 @@
 #coding: utf-8
 require 'json'
+require 'base64'
 require 'net/http'
 require 'digest/sha2'
 require File.expand_path("../../../lib/crypt-xxtea/xxtea", __FILE__)
@@ -13,6 +14,9 @@ class CastsController < ApplicationController
 
   def new
     @cast = Cast.new
+    @upload_auth   = get_upload_token
+    @upload_action = gen_action
+    @upload_params = "{key: \"#{gen_key}\"}"
   end
 
   def create
@@ -31,6 +35,9 @@ class CastsController < ApplicationController
 
   def show
     @cast = Cast.find_by_id(params[:id])
+  end
+
+  def up_qiniu
   end
 
 
@@ -67,8 +74,21 @@ class CastsController < ApplicationController
     js = JSON js
   end
 
+  def gen_action
+    entry_uri = "ppst:#{gen_key}"
+    entry_uri_64 = Base64.encode64(entry_uri)
+    entry = entry_uri_64.gsub("+","-").gsub("/", "_")
+    "/rs-put/#{entry}"
+  end
+
+  def gen_key
+    str = "#{current_user.id}-#{Time.now.to_i}"
+    Digest::SHA2.hexdigest(str)
+  end
+
   def gen_upload_key 
     str = "#{current_user.id}-#{params[:upload].original_filename}"
     Digest::SHA2.hexdigest(str)
   end
+
 end
