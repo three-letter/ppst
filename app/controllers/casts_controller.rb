@@ -16,7 +16,6 @@ class CastsController < ApplicationController
     @cast = Cast.new
     @upload_auth   = get_upload_token
     @upload_action = gen_action
-    @upload_params = "{key: \"#{gen_key}\"}"
   end
 
   def create
