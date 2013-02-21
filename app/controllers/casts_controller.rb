@@ -3,10 +3,9 @@ require 'json'
 require 'base64'
 require 'net/http'
 require 'digest/sha2'
-require File.expand_path("../../../lib/crypt-xxtea/xxtea", __FILE__)
 
 class CastsController < ApplicationController
-  before_filter :authentication
+  before_filter :authentication, :except => :set_url
 
   def index
     @casts = Cast.order("updated_at desc").all
