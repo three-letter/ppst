@@ -63,12 +63,10 @@
           var progress = parseInt(t.loaded / t.total * 100, 10);
           $('.progress .bar').css('width',progress + '%');
           $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-        },
-        done: function(e,t){
-          $('.progress .bar').css('width',100 + '%');
-          $('.progress .bar').html("<font color='green'>100%</font>");
-          var html = '<div>上传成功！点击<a href="">这里</a>进行跳转</div>';
-          $("#videoupload").html(html);
+          if(progress == 100){
+            var html = '<div>上传成功！点击<a href="">这里</a>进行跳转</div>';
+            $("#videoupload").html(html);
+          }
         }
      });
 
