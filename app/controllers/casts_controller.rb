@@ -44,7 +44,7 @@ class CastsController < ApplicationController
       cast.url = params[:key].strip
       cast.save
       respond_to do |format|
-        format.text "#{cast.id}"
+        format.text "id=#{cast.id}&key=#{params[:key]}"
       end
     end
   end
