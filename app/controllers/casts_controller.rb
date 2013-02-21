@@ -22,7 +22,7 @@ class CastsController < ApplicationController
         key = gen_key
         @upload_auth   = get_upload_token
         @upload_action = gen_action key
-        @upload_params = "{id: #{@cast.id}, key: \"#{key}\"}"
+        @upload_params = "id=#{@cast.id}&key=#{key}"
         format.html {render action: "up_qiniu" }
       else
         format.html { render action: "new"}
@@ -64,7 +64,7 @@ class CastsController < ApplicationController
     Qiniu::RS.generate_upload_token :scope                =>  "ppst",
                                     :expires_in           =>  60 * 30,
                                     :callback_url         =>  "http://ppst.herokuapp.com/casts/set_url",
-                                    :callback_body_type   =>  "application/json",
+                                    :callback_body_type   =>  "application/x-www-form-urlencoded",
                                     :customer             =>  current_user.id.to_s,
                                     :escape               =>  1,
                                     :async_options        =>  "avthumb/mp4"
