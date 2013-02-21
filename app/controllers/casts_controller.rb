@@ -43,7 +43,6 @@ class CastsController < ApplicationController
       cast = Cast.find_by_id(params[:id])
       cast.url = params[:key].strip
       cast.save
-      redirect_to action: "show", id: cast.id
     end
   end
 
