@@ -2,77 +2,42 @@
 
   <legend>分享视播</legend>
 
-  <%= form_tag "http://up.qbox.me/upload", :multipart => true, :id => "videoupload", :class => "simple_form form-horizontal" do %>
+  <%= form_for @cast, :html => { :id => "cast_share_form", :class => "simple_form form-horizontal" } do |f| %>
     <fieldset>
-      <%= hidden_field_tag :auth, @upload_auth %>
-      <%= hidden_field_tag :action, @upload_action %>
-      <%= hidden_field_tag :return_url, "http://10.10.65.95:3000/casts/new" %>
-      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-      <div class="control-group" id="fileupload-choose-area">
-        <%= label_tag :title, "上传视频", :class => "control-label" %>
+
+      <%= f.hidden_field :url %>
+
+      <div class="control-group">
+        <%= f.label :title, "标题", :class => "control-label" %>
         <div class="controls">
-          <span class="btn btn-success fileinput-button">
-            <i class="icon-plus icon-white"></i>
-            <span>选择视频</span>
-            <input id="up_v" value="" name="file" type="file" />
-          </span>
+          <%= f.text_field :title, :class => "text_field" %>
+          <p style="color:red"><%= @cast.errors[:title][0].to_s %></p>
         </div>
       </div>
-      <!-- The loading indicator is shown during image processing -->
-      <div class="controls">
-        <div class="files" id="fileupload-area"></div>
-        <p style="color:red"><%= @cast.errors[:url][0].to_s %></p>
+
+      <div class="control-group">
+        <%= f.label :price, "价格", :class => "control-label" %>
+        <div class="controls">
+          <%= f.select :price, options_for_select({"免费" => 0 , "1￥" => 1, "5￥" => 5, "10￥" => 10}, 1) %>
+        </div>
       </div>
+
+
+      <div class="control-group">
+        <%= f.label :free_time, "试看时间", :class => "control-label" %>
+        <div class="controls">
+          <%= f.text_field :free_time, :value => "10", :class => "text_field" %>
+          <p style="color:red"><%= @cast.errors[:free_time][0].to_s %></p>
+        </div>
+      </div>
+
+
+      <div class="form-actions">
+        <%= f.submit '确定并上传视频', :id => "cast_share_btn", :class => 'btn btn-primary' %>
+        <%= link_to '取消', casts_path, :class => 'btn' %>
+      </div>
+
     </fieldset>
   <% end %>
-
 </div>
-
-
-<!-- The template to display files available for upload -->
-<script id="template-upload" type="text/x-tmpl">
-  <div class="upload">
-    {%=o.name%}
-    <div class="progress progress-striped active">
-      <div class="bar" style="width: 0%"></div>
-    </div>
-  </div>
-</script>
-
-<script id="template-download" type="text/x-tmpl">
-  <div class="upload">
-    {%=o.name%}
-    <div class="progress progress-striped active">
-      <div class="bar" style="width: 0%"></div>
-    </div>
-  </div>
-</script>
-
-
-<script type="text/javascript" charset="utf-8">
-  $(function () {
-      // Initialize the jQuery File Upload widget:
-      $('#videoupload').fileupload({
-        multipart: true,
-        url: "http://up.qbox.me/upload",
-        dataType: "json",
-        add: function(e,t){
-          var n,r;
-          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
-        },
-        progress: function(e,t){
-          var progress = parseInt(t.loaded / t.total * 100, 10);
-          $('.progress .bar').css('width',progress + '%');
-          $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-        },
-        done: function(e,t){
-          $('.progress .bar').css('width',100 + '%');
-          $('.progress .bar').html("<font color='green'>100%</font>");
-          $("#cast_url").val(t.result["key"]);
-        }
-     });
-
-      
- });
-</script>
 
