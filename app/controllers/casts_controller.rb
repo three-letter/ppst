@@ -38,7 +38,6 @@ class CastsController < ApplicationController
   end
 
   def set_url
-    binding.pry
     if !params[:key].blank? && !params[:id].blank?
       cast = Cast.find_by_id(params[:id])
       cast.url = params[:key].strip
