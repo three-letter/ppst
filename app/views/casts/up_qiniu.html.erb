@@ -49,6 +49,11 @@
 
 
 <script type="text/javascript" charset="utf-8">
+      function up_done(){
+        var html = '<div>上传成功！点击<a href="/casts/<%= @cast.id %>">这里</a>进行跳转</div>';
+        $("#videoupload").html(html);
+      }
+
   $(function () {
       // Initialize the jQuery File Upload widget:
       $('#videoupload').fileupload({
@@ -63,15 +68,13 @@
           var progress = parseInt(t.loaded / t.total * 100, 10);
           $('.progress .bar').css('width',progress + '%');
           $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-          if(progress == 100)
-            setTimeout('up_done()', 500);
+        },
+        done: function(e,t){
+          $('.progress .bar').css('width',100 + '%');
+          $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
+          setTimeout('up_done()',500);
         }
-     });
-    
-    function up_done(){
-    var html = '<div>上传成功！点击<a href="/casts/<%= @cast.id %>">这里</a>进行跳转</div>';
-      $("#videoupload").html(html);
-    }
+      });
       
  });
 </script>
