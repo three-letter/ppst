@@ -58,7 +58,7 @@ class CastsController < ApplicationController
   def get_upload_token
     Qiniu::RS.generate_upload_token :scope                =>  "ppst",
                                     :expires_in           =>  60 * 30,
-                                    :callback_url         =>  "",
+#                                    :callback_url         =>  "",
                                     :callback_body_type   =>  "application/json",
                                     :customer             =>  current_user.id.to_s,
                                     :escape               =>  1,
