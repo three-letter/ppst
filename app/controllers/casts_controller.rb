@@ -43,6 +43,10 @@ class CastsController < ApplicationController
       cast = Cast.find_by_id(params[:id])
       cast.url = params[:key].strip
       cast.save
+      respond_to do |format|
+        rsp = {:id => cast.id, :key => params[:key]}
+        format.json {render json: JSON(rsp)}
+      end
     end
   end
 
