@@ -22,8 +22,8 @@ class CastsController < ApplicationController
         key = gen_key
         @upload_auth   = get_upload_token
         @upload_action = gen_action key
-        @upload_params = "id=7&key=#{key}"
-        #@upload_params = "id=#{@cast.id}&key=#{key}"
+        #@upload_params = "id=7&key=#{key}"
+        @upload_params = "id=#{@cast.id}&key=#{key}"
         format.html {render action: "up_qiniu" }
       else
         format.html { render action: "new"}
