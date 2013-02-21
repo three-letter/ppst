@@ -14,15 +14,17 @@ class CastsController < ApplicationController
 
   def new
     @cast = Cast.new
-    @upload_auth   = get_upload_token
-    @upload_action = gen_action
   end
 
   def create
     @cast = Cast.new(params[:cast].merge(user_id: current_user.id))
     respond_to do |format|
       if @cast.save
-        format.html { redirect_to action: "show", :id => @cast}
+        key = gen_key
+        @upload_auth   = get_upload_token
+        @upload_action = gen_action key
+        @upload_params = "{id: #{@cast.id}, key: \"#{key}\"}"
+        format.html {render action: "up_qiniu" }
       else
         format.html { render action: "new"}
       end
@@ -36,18 +38,24 @@ class CastsController < ApplicationController
     @cast = Cast.find_by_id(params[:id])
   end
 
-  def up_qiniu
+  def set_url
+    binding.pry
+    if !params[:key].blank? && !params[:id].blank?
+      cast = Cast.find_by_id(params[:id])
+      cast.url = params[:key].strip
+      cast.save
+      redirect_to action: "show", id: cast.id
+    end
   end
-
 
   def upload
     @result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
-                                    :file       => params[:upload].tempfile.path,
+                                    :file       => params[:file].tempfile.path,
                                     :bucket     => "ppst",
                                     :key        => gen_upload_key
     respond_to do |format|
       unless @result.blank?
-        format.json { render json: video_to_json(params[:upload]) }
+        format.json { render json: video_to_json(params[:file]) }
       end
     end
   end
@@ -57,7 +65,7 @@ class CastsController < ApplicationController
   def get_upload_token
     Qiniu::RS.generate_upload_token :scope                =>  "ppst",
                                     :expires_in           =>  60 * 30,
-#                                    :callback_url         =>  "",
+                                    :callback_url         =>  "http://ppst.herokuapp.com/casts/set_url",
                                     :callback_body_type   =>  "application/json",
                                     :customer             =>  current_user.id.to_s,
                                     :escape               =>  1,
@@ -73,10 +81,10 @@ class CastsController < ApplicationController
     js = JSON js
   end
 
-  def gen_action
-    entry_uri = "ppst:#{gen_key}"
+  def gen_action key
+    entry_uri = "ppst:#{key}"
     entry_uri_64 = Base64.encode64(entry_uri)
-    entry = entry_uri_64.gsub("+","-").gsub("/", "_")
+    entry = entry_uri_64.strip.gsub("+","-").gsub("/", "_")
     "/rs-put/#{entry}"
   end
 
@@ -86,7 +94,7 @@ class CastsController < ApplicationController
   end
 
   def gen_upload_key 
-    str = "#{current_user.id}-#{params[:upload].original_filename}"
+    str = "#{current_user.id}-#{params[:file].original_filename}"
     Digest::SHA2.hexdigest(str)
   end
 
