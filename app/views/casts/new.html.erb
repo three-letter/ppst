@@ -48,38 +48,17 @@
   </div>
 </script>
 
-<script>
-    var fileUploadErrors = {
-          maxFileSize: 'File is too big',
-              minFileSize: 'File is too small',
-                  acceptFileTypes: 'Filetype not allowed',
-                      maxNumberOfFiles: 'Max number of files exceeded',
-                          uploadedBytes: 'Uploaded bytes exceed file size',
-                              emptyResult: 'Empty file upload result'
-                                };
-                              </script>
 
 <script type="text/javascript" charset="utf-8">
   $(function () {
-    $("#up_v").change(function(){
       // Initialize the jQuery File Upload widget:
-      $('#videoupload').fileupload();
-
-      $('#videoupload').fileupload('option', {
-        maxFileSize: 1000,
-        formData: function(form){
-          var data = from.serializeArray();
-          data.push({name: 'file', value: this.files[0]});
-          return data;
-        }
-      });
-      
       $('#videoupload').fileupload({
+        multipart: true,
+        url: "http://up.qbox.me/upload",
         dataType: "json",
         add: function(e,t){
-          alert(locale.fileupload.errors[t.files[0].error]);
           var n,r;
-          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.form.submit()):alert("只支持mp4格式")
+          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
         },
         progress: function(e,t){
           var progress = parseInt(t.loaded / t.total * 100, 10);
@@ -91,7 +70,6 @@
         }
      });
 
-   });
       
  });
 </script>
