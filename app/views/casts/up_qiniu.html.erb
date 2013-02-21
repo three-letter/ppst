@@ -63,13 +63,15 @@
           var progress = parseInt(t.loaded / t.total * 100, 10);
           $('.progress .bar').css('width',progress + '%');
           $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-          if(progress == 100){
-            var html = '<div>上传成功！点击<a href="">这里</a>进行跳转</div>';
-            $("#videoupload").html(html);
-          }
+          if(progress == 100)
+            setTimeout('up_doen()', 1000);
         }
      });
-
+    
+    function up_done(){
+    var html = '<div>上传成功！点击<a href="/casts/<%= @cast.id %>">这里</a>进行跳转</div>';
+      $("#videoupload").html(html);
+    }
       
  });
 </script>
