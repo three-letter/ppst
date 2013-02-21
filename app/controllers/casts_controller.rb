@@ -43,7 +43,9 @@ class CastsController < ApplicationController
       cast = Cast.find_by_id(params[:id])
       cast.url = params[:key].strip
       cast.save
-      render.text "id=#{cast.id}&key=#{params[:key]}"
+      respond_to do |format|
+        format.html { render :text => "id=#{cast.id}&key=#{params[:key]}"}
+      end
     end
   end
 
