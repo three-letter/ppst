@@ -6,7 +6,6 @@
     <fieldset>
       <%= hidden_field_tag :auth, @upload_auth %>
       <%= hidden_field_tag :action, @upload_action %>
-      <%= hidden_field_tag :params, @upload_params %>
       
       <%= hidden_field_tag :id, 4 %>
       <%= hidden_field_tag :key, "123" %>
@@ -52,16 +51,19 @@
 
 
 <script type="text/javascript" charset="utf-8">
-      function up_done(){
+  function up_done(code){
+    if(code == 1){
         var html = '<div>上传成功！点击<a href="/casts/<%= @cast.id %>">这里</a>进行跳转</div>';
         $("#videoupload").html(html);
-      }
+    }else{
+      alert("上传失败");  
+    }
+  }
 
   $(function () {
       // Initialize the jQuery File Upload widget:
       $('#videoupload').fileupload({
         multipart: true,
-        //url: "<%= url_for(controller: "casts", action: "set_url") %>",
         url: "http://up.qbox.me/upload",
         dataType: "json",
         add: function(e,t){
@@ -76,7 +78,15 @@
         done: function(e,t){
           $('.progress .bar').css('width',100 + '%');
           $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
-          setTimeout('up_done()',500);
+          $.ajax({
+            url: "<%= url_for(:controller => 'casts', :action => 'set_url')%>",
+            type: "POST",
+            data: "id=<%= @cast.id %>&<%= @upload_params %>",
+            success: function(data){
+              up_done(data.code);
+            }
+          });
+          
         }
       });
       

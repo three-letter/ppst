@@ -22,8 +22,7 @@ class CastsController < ApplicationController
         key = gen_key
         @upload_auth   = get_upload_token
         @upload_action = gen_action key
-        @upload_params = "id=19&key=#{key}"
-        #@upload_params = "id=#{@cast.id}&key=#{key}"
+        @upload_params = "key=#{key}"
         format.html {render action: "up_qiniu" }
       else
         format.html { render action: "new"}
@@ -44,8 +43,9 @@ class CastsController < ApplicationController
       cast.url = params[:key].strip
       cast.save
       respond_to do |format|
-        rsp = {:id => cast.id, :key => params[:key]}
-        format.json { render json: JSON(rsp)}
+        set_info = {:code => 0}
+        set_info[:code] = 1 if cast.save
+        format.json { render json: JSON(set_info)}
       end
     end
   end
@@ -67,7 +67,7 @@ class CastsController < ApplicationController
   def get_upload_token
     Qiniu::RS.generate_upload_token :scope                =>  "ppst",
                                     :expires_in           =>  60 * 30,
-                                    :callback_url         =>  "http://ppst.herokuapp.com/casts/set_url",
+#                                    :callback_url         =>  "http://ppst.herokuapp.com/casts/set_url",
                                     :callback_body_type   =>  "application/x-www-form-urlencoded",
                                     :customer             =>  current_user.id.to_s,
                                     :escape               =>  1,
