@@ -44,7 +44,6 @@ class CastsController < ApplicationController
       cast.url = params[:key].strip
       cast.save
       respond_to do |format|
-        response.headers["Content-Type"] = "application/json"
         rsp = {:id => cast.id, :key => params[:key]}
         format.json { render json: JSON(rsp)}
       end

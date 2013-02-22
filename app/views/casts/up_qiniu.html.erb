@@ -7,6 +7,9 @@
       <%= hidden_field_tag :auth, @upload_auth %>
       <%= hidden_field_tag :action, @upload_action %>
       <%= hidden_field_tag :params, @upload_params %>
+      
+      <%= hidden_field_tag :id, 4 %>
+      <%= hidden_field_tag :key, "123" %>
       <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
       <div class="control-group" id="fileupload-choose-area">
         <%= label_tag :title, "上传视频", :class => "control-label" %>
@@ -58,6 +61,7 @@
       // Initialize the jQuery File Upload widget:
       $('#videoupload').fileupload({
         multipart: true,
+        //url: "<%= url_for(controller: "casts", action: "set_url") %>",
         url: "http://up.qbox.me/upload",
         dataType: "json",
         add: function(e,t){
