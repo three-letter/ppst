@@ -1,4 +1,64 @@
+<% content_for :title do %>
+用户信息
+<% end %>
 
-<%= image_tag @user.avatar.url(:mini) %>
-<%= image_tag @user.avatar.url(:small) %>
-<%= image_tag @user.avatar.url(:large) %>
+<div class="profile_box span8">
+<%= form_for @user, :html => { :class => "simple_form form-horizontal", :multipart => true } do |f| %>
+
+  <legend>基本信息</legend>
+  
+  <div class="control-group">
+    <%= f.label :name, '用户名', :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :value => @user.name, :readonly => true %>
+    </div>
+  </div>
+  
+  <div class="control-group">
+    <%= f.label :avatar, '头像', :class => 'control-label' %>
+    <div class="controls">
+      <%= image_tag "http://ppst.qiniudn.com/1-Sunset.jpg?imageMogr/crop/!56x56a400a250", :class => "avatar" %>
+      <%= link_to '修改头像', avatar_path %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :alipay, '支付宝帐号', :class => 'control-label' %>
+    <div class="controls">
+      需要身份验证，点击<a href="">这里</a>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit '确定', :class => 'btn btn-primary' %>
+    <%= link_to '取消', users_path, :class => 'btn' %>
+  </div>
+<% end %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  
+  $(function () {
+      // Initialize the jQuery File Upload widget:
+      $('#videoupload').fileupload({
+        multipart: true,
+        url: "http://up.qbox.me/upload",
+        dataType: "json",
+        add: function(e,t){
+          var n,r;
+          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
+        },
+        progress: function(e,t){
+          var progress = parseInt(t.loaded / t.total * 100, 10);
+          $('.progress .bar').css('width',progress + '%');
+          $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
+        },
+        done: function(e,t){
+          $('.progress .bar').css('width',100 + '%');
+          $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
+          $("#cast_url").val("<%= @upload_key %>");   
+        }
+      });    
+  });
+
+</script>

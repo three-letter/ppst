@@ -1,0 +1,98 @@
+
+<% content_for :title do %>
+上传头像
+<% end %>
+
+<% content_for :head do %>
+<script type="text/javascript" charset="utf-8">
+  jQuery(function($){
+      $('#cropbox').Jcrop({
+onChange: update_crop,
+onSelect: update_crop,
+setSelect: [30, 30, 100, 100],
+aspectRatio: 1
+});
+      });
+
+function update_crop(coords) {
+  var rx = <%= User::AVATAR_SW %>/coords.w;
+  var ry = <%= User::AVATAR_SH %>/coords.h;
+  var ratio = $("#img_w").val / <%= User::AVATAR_LW %>;
+  $('#preview').css({
+width: Math.round(rx * <%= User::AVATAR_LW %>) + 'px',
+height: Math.round(ry * <%= User::AVATAR_LH %>) + 'px',
+marginLeft: '-' + Math.round(rx * coords.x) + 'px',
+marginTop: '-' + Math.round(ry * coords.y) + 'px'
+});
+$("#crop_x").val(Math.round(coords.x * ratio));
+$("#crop_y").val(Math.round(coords.y * ratio));
+$("#crop_w").val(Math.round(coords.w * ratio));
+$("#crop_h").val(Math.round(coords.h * ratio));
+}
+</script>
+<% end%>
+
+<div class="profile_box span8">
+  <legend>修改用户头像</legend>
+  <%= render "casts/up_qiniu" %>
+  <%= hidden_field_tag :img_w, 0 %>
+
+
+  <div id="crop-area">
+  <div class='span5 '>
+    拖动图片中的方框进行裁剪
+    <div>
+      <%= image_tag "", :id => 'cropbox' %>
+    </div>
+    <div>
+      <%= form_for @user, :class => "form-horizontal" do |f| %>
+        <div class="control-group">
+          <label class="control-label" for="user_name"></label>
+          <div class="controls">
+            <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
+              <%= f.hidden_field attribute, :id => attribute %>
+            <% end %>
+          </div>
+        </div>
+        <div class="form-actions">
+          <%= f.submit "裁剪", :class => "btn btn-primart" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class='span2' style="margin-top:0px;">
+    这是你在网站的头像图标
+    <div id="div-preview" style="overflow:hidden;width:<%= User::AVATAR_SW %>px;height:<%= User::AVATAR_SH %>px">
+      <%= image_tag "", :id => "preview" %>
+    </div>
+  </div>
+  </div>
+
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  
+  $(function () {
+      // Initialize the jQuery File Upload widget:
+      $('#videoupload').fileupload({
+        multipart: true,
+        url: "http://up.qbox.me/upload",
+        dataType: "json",
+        add: function(e,t){
+          var n,r;
+          return r=/(\.|\/)(jp?g|bmp)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持JPEG JPG BMP格式")
+        },
+        progress: function(e,t){
+          var progress = parseInt(t.loaded / t.total * 100, 10);
+          $('.progress .bar').css('width',progress + '%');
+          $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
+        },
+        done: function(e,t){
+          $('.progress .bar').css('width',100 + '%');
+          $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
+        }
+      });    
+  });
+
+</script>

@@ -6,6 +6,7 @@
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Ppst" %>">
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
+      <script src="http://10.10.65.95:8080/application.js" type="text/javascript" charset="utf-8"></script>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>
@@ -26,7 +27,7 @@
               </ul>
             <% else %>
               <ul class="nav actions user">
-                <li><a href=""><span class="badge ">0</span></a></li>
+                <li><a href=""><span id="sys-msg" class="badge">0</span></a></li>
                 <li class="offset-right dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                   <img src="<%= current_user.avatar_type(:mini) %>" style="border-radius:50% 50% 50% 50%" /> <b class="caret"></b>
@@ -36,7 +37,7 @@
                     <a href="<%= home_path %>"> <i class="icon-home"></i> 我的主页</a>
                   </li>                   
                   <li>
-                  <a href="<%= edit_user_path current_user %>"><i class="icon-wrench"></i> 个人信息</a>
+                  <a href="<%= user_path current_user %>"><i class="icon-wrench"></i> 个人信息</a>
                   </li>                   
                   <li>
                   <a href="<%= logout_path %>"><i class="icon-off"></i> 退出</a>
@@ -72,6 +73,16 @@
 
 
     </div>
+
+    <script type="text/javascript">
+      if(<%= sign_in? %>){
+        var jug = new Juggernaut;
+        jug.subscribe("/msg-<%= @current_user.id %>", function(data){
+          if(data != null && data.length > 0)
+            $("#sys-msg").html(data);
+        });
+      }
+    </script>
 
   </body>
 </html>

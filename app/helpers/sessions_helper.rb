@@ -24,6 +24,31 @@ module SessionsHelper
     end
   end
 
+  def UrlSafeBase64Encode str
+    entry_uri_64 = Base64.encode64(str)
+    entry_uri_64.strip.gsub("+","-").gsub("/", "_")
+  end
+
+  def get_upload_token
+    Qiniu::RS.generate_upload_token :scope                =>  "ppst",
+                                    :expires_in           =>  60 * 30,
+#                                    :callback_url         =>  "http://ppst.herokuapp.com/casts/set_url",
+                                    :callback_body_type   =>  "application/x-www-form-urlencoded",
+                                    :customer             =>  current_user.id.to_s,
+                                    :escape               =>  1
+  end
+
+  def gen_action key
+    entry_uri = "ppst:#{key}"
+    entry = UrlSafeBase64Encode(entry_uri) 
+    "/rs-put/#{entry}"
+  end
+
+  def gen_key
+    str = "#{current_user.id}-#{Time.now.to_i}"
+    Digest::SHA2.hexdigest(str)
+  end
+
   private
     def user_from_token
       User.authenticate_by_token(*token)

@@ -1,4 +1,6 @@
 #coding: utf-8
+require File.expand_path("../../../lib/crypt-xxtea/xxtea",__FILE__)
+
 class UsersController < ApplicationController
 
   before_filter :authentication, :except => [:new, :create]
@@ -55,5 +57,13 @@ class UsersController < ApplicationController
       render "edit" 
     end
   end 
+
+  def avatar
+    @user = @current_user
+    key = gen_key
+    @upload_auth   = get_upload_token
+    @upload_action = gen_action key
+    @upload_key = XXTEA.encrypt(XXTEA::SKEY,key)
+  end
 
 end

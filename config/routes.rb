@@ -13,6 +13,7 @@ Ppst::Application.routes.draw do
   match "/signin",   :to => "sessions#create"
   match "/logout", :to => "sessions#destroy"
   match "/home", :to => "users#home"
+  match "/avatar", :to => "users#avatar"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

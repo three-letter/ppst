@@ -6,11 +6,11 @@
       
       <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
       <div class="control-group" id="fileupload-choose-area">
-        <%= label_tag :title, "上传视频", :class => "control-label" %>
+        <%= label_tag :title, "上传文件", :class => "control-label" %>
         <div class="controls">
           <span class="btn btn-success fileinput-button">
             <i class="icon-plus icon-white"></i>
-            <span>选择视频</span>
+            <span>选择文件</span>
             <input id="up_v" value="" name="file" type="file" />
           </span>
         </div>
@@ -18,7 +18,7 @@
       <!-- The loading indicator is shown during image processing -->
       <div class="controls">
         <div class="files" id="fileupload-area"></div>
-        <div class="files"><font color="red"><%= @cast.errors[:url][0].to_s %></font></div>
+        <div class="files"><font color="red"><%= @cast.nil? ? @user.errors[:url][0].to_s : @cast.errors[:url][0].to_s %></font></div>
       </div>
     </fieldset>
   <% end %>
@@ -45,38 +45,4 @@
 </script>
 
 
-<script type="text/javascript" charset="utf-8">
-  function up_done(code){
-    if(code == 1){
-        var html = '<div>上传成功！点击<a href="/casts/<%= @cast.id %>">这里</a>进行跳转</div>';
-        $("#videoupload").html(html);
-    }else{
-      alert("上传失败");  
-    }
-  }
-
-  $(function () {
-      // Initialize the jQuery File Upload widget:
-      $('#videoupload').fileupload({
-        multipart: true,
-        url: "http://up.qbox.me/upload",
-        dataType: "json",
-        add: function(e,t){
-          var n,r;
-          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
-        },
-        progress: function(e,t){
-          var progress = parseInt(t.loaded / t.total * 100, 10);
-          $('.progress .bar').css('width',progress + '%');
-          $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-        },
-        done: function(e,t){
-          $('.progress .bar').css('width',100 + '%');
-          $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
-          $("#cast_url").val("<%= @upload_key %>");   
-        }
-      });
-      
- });
-</script>
 
