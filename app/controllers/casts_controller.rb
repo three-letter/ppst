@@ -28,6 +28,7 @@ class CastsController < ApplicationController
       if @cast.save
         format.html {redirect_to action: "show", id: @cast.id }
       else
+        @cast.url = XXTEA.encrypt(XXTEA::SKEY,@cast.url)
         format.html { render action: "new"}
       end
     end
