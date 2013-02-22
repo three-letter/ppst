@@ -40,7 +40,7 @@ class CastsController < ApplicationController
 
   def set_url
     if !params[:key].blank? && !params[:id].blank?
-      cast = Cast.find_by_id(params[:id])
+      cast = Cast.find_by_id(params[:id].to_i)
       cast.url = params[:key].strip
       cast.save
       respond_to do |format|
