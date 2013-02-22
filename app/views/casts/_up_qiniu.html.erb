@@ -1,14 +1,9 @@
-<div class="profile_box span9">
-
-  <legend>分享视播</legend>
 
   <%= form_tag "http://up.qbox.me/upload", :multipart => true, :id => "videoupload", :class => "simple_form form-horizontal" do %>
     <fieldset>
       <%= hidden_field_tag :auth, @upload_auth %>
       <%= hidden_field_tag :action, @upload_action %>
       
-      <%= hidden_field_tag :id, 4 %>
-      <%= hidden_field_tag :key, "123" %>
       <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
       <div class="control-group" id="fileupload-choose-area">
         <%= label_tag :title, "上传视频", :class => "control-label" %>
@@ -23,11 +18,11 @@
       <!-- The loading indicator is shown during image processing -->
       <div class="controls">
         <div class="files" id="fileupload-area"></div>
+        <div class="files"><font color="red"><%= @cast.errors[:url][0].to_s %></font></div>
       </div>
     </fieldset>
   <% end %>
 
-</div>
 
 
 <!-- The template to display files available for upload -->
@@ -78,15 +73,7 @@
         done: function(e,t){
           $('.progress .bar').css('width',100 + '%');
           $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
-          $.ajax({
-            url: "<%= url_for(:controller => 'casts', :action => 'set_url')%>",
-            type: "POST",
-            data: "id=<%= @cast.id %>&<%= @upload_params %>",
-            success: function(data){
-              up_done(data.code);
-            }
-          });
-          
+          $("#cast_url").val("<%= @upload_key %>");   
         }
       });
       

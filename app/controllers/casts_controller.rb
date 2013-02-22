@@ -3,6 +3,8 @@ require 'json'
 require 'base64'
 require 'net/http'
 require 'digest/sha2'
+require File.expand_path("../../../lib/crypt-xxtea/xxtea",__FILE__)
+
 
 class CastsController < ApplicationController
   before_filter :authentication, :except => :set_url
@@ -13,17 +15,18 @@ class CastsController < ApplicationController
 
   def new
     @cast = Cast.new
+    key = gen_key
+    @upload_auth   = get_upload_token
+    @upload_action = gen_action key
+    @upload_key = XXTEA.encrypt(XXTEA::SKEY,key)
   end
 
   def create
     @cast = Cast.new(params[:cast].merge(user_id: current_user.id))
+    @cast.url = XXTEA.decrypt(XXTEA::SKEY,@cast.url)
     respond_to do |format|
       if @cast.save
-        key = gen_key
-        @upload_auth   = get_upload_token
-        @upload_action = gen_action key
-        @upload_params = "key=#{key}"
-        format.html {render action: "up_qiniu" }
+        format.html {redirect_to action: "show", id: @cast.id }
       else
         format.html { render action: "new"}
       end
@@ -35,31 +38,6 @@ class CastsController < ApplicationController
 
   def show
     @cast = Cast.find_by_id(params[:id])
-  end
-
-  def set_url
-    if !params[:key].blank? && !params[:id].blank?
-      cast = Cast.find_by_id(params[:id].to_i)
-      cast.url = params[:key].strip
-      cast.save
-      respond_to do |format|
-        set_info = {:code => 0}
-        set_info[:code] = 1 if cast.save
-        format.json { render json: JSON(set_info)}
-      end
-    end
-  end
-
-  def upload
-    @result = Qiniu::RS.upload_file :uptoken    => get_upload_token,
-                                    :file       => params[:file].tempfile.path,
-                                    :bucket     => "ppst",
-                                    :key        => gen_upload_key
-    respond_to do |format|
-      unless @result.blank?
-        format.json { render json: video_to_json(params[:file]) }
-      end
-    end
   end
 
   private
@@ -74,15 +52,6 @@ class CastsController < ApplicationController
                                     :async_options        =>  "avthumb/mp4"
   end
 
-  def video_to_json file
-    js ={ 
-      "key"  => gen_upload_key,
-      "name" => file.original_filename,
-      "size" => file.size 
-    }
-    js = JSON js
-  end
-
   def gen_action key
     entry_uri = "ppst:#{key}"
     entry_uri_64 = Base64.encode64(entry_uri)
@@ -92,11 +61,6 @@ class CastsController < ApplicationController
 
   def gen_key
     str = "#{current_user.id}-#{Time.now.to_i}"
-    Digest::SHA2.hexdigest(str)
-  end
-
-  def gen_upload_key 
-    str = "#{current_user.id}-#{params[:file].original_filename}"
     Digest::SHA2.hexdigest(str)
   end
 

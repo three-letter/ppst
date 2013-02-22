@@ -146,4 +146,3 @@
 
   end
 
-  puts XXTEA.encrypt_ku6

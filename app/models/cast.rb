@@ -6,6 +6,7 @@ class Cast < ActiveRecord::Base
   validates :title, :presence => { :message => "标题不能为空" },
                     :length => { :maximum => 32, :message => "标题最长为32字符" }
   validates :free_time, :numericality =>{ :only_integer => true, :message => "试看时间必须是整数" }
+  validates :url, :presence => { :message => "视频信息不能为空" }
 
   belongs_to :user
   has_many :comments
