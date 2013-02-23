@@ -89,15 +89,17 @@ class UsersController < ApplicationController
     def cropping?
      !params[:crop_x].blank? && !params[:crop_y].blank? && !params[:crop_w].blank? && !params[:crop_h].blank? && !params[:url].blank? && !params[:id].blank?
     end
-    # save image to qiniu after mogr
+    # 根据前端获取的裁剪参数x y w h　裁剪并保存大图
+    # 根据保存的大图进行小图　微图的缩放和保存
     def avatar_save_qiniu key
       index = key.sub('.jpg', '')
       mini_avatar = "#{index}_mini.jpg"
       small_avatar = "#{index}_small.jpg"
       large_avatar = "#{index}_large.jpg"
-      Qiniu::RS.image_mogrify_save_as("ppst", mini_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_MW}x#{User::AVATAR_MH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{mini_avatar}") })
-      Qiniu::RS.image_mogrify_save_as("ppst", small_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_SW}x#{User::AVATAR_SH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{small_avatar}") })
-      Qiniu::RS.image_mogrify_save_as("ppst", large_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_LW}x#{User::AVATAR_LH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{large_avatar}") })
+      Qiniu::RS.image_mogrify_save_as("ppst", large_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{params[:crop_w]}x#{params[:crop_h]}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{large_avatar}") })
+      
+      Qiniu::RS.image_mogrify_save_as("ppst", mini_avatar, Qiniu::RS.get('ppst',large_avatar)["url"], {:thumbnail => "!#{User::AVATAR_MW}x#{User::AVATAR_MH}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{mini_avatar}") })
+      Qiniu::RS.image_mogrify_save_as("ppst", small_avatar, Qiniu::RS.get('ppst',large_avatar)["url"], {:thumbnail => "!#{User::AVATAR_SW}x#{User::AVATAR_SH}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{small_avatar}") })
     end
 
 end
