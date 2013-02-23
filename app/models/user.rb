@@ -2,7 +2,7 @@
 require 'digest/sha2'
 
 class User < ActiveRecord::Base
-  attr_accessible :alipay, :email, :name, :password, :salt, :pwd, :pwd_confirmation, :crop_x, :crop_y, :crop_w, :crop_h
+  attr_accessible :alipay, :email, :name, :password, :salt, :pwd, :pwd_confirmation, :crop_x, :crop_y, :crop_w, :crop_h, :url
   attr_accessor :pwd
 
   # all validates for the field of user
@@ -13,18 +13,19 @@ class User < ActiveRecord::Base
                    :confirmation => { :message => "两次密码不一致" }
 
    # the avatar config
+   AVATAR_MW = 20
+   AVATAR_MH = 20
    AVATAR_SW = 56
    AVATAR_SH = 56
    AVATAR_LW = 120
    AVATAR_LH = 120
+   AVATAR_XLW = 350
+   AVATAR_XLH = 350
    attr_accessor :crop_x, :crop_y, :crop_w, :crop_h
 
    has_many :casts
    has_many :comments
 
-   def cropping?
-     !crop_x.blank? && !crop_y.blank? && !crop_w.blank? && !crop_h.blank?
-   end
 
   before_save :encrypt_password
 
@@ -46,6 +47,8 @@ class User < ActiveRecord::Base
   end
 
   def avatar_type type
+    index = url.sub('.jpg', '')
+    "http://ppst.qiniudn.com/#{index}_#{type.to_s}.jpg"
   end
 
 

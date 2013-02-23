@@ -1,4 +1,5 @@
 #coding: utf-8
+require 'json'
 require File.expand_path("../../../lib/crypt-xxtea/xxtea",__FILE__)
 
 class UsersController < ApplicationController
@@ -60,10 +61,43 @@ class UsersController < ApplicationController
 
   def avatar
     @user = @current_user
-    key = gen_key
+    key = "avatar_#{@current_user.id}_#{Time.now.to_i}.jpg"
     @upload_auth   = get_upload_token
     @upload_action = gen_action key
     @upload_key = XXTEA.encrypt(XXTEA::SKEY,key)
   end
+
+  def avatar_save
+    respond_to do |format|
+      if cropping?
+        url = XXTEA.decrypt(XXTEA::SKEY,params[:url])
+        rst = avatar_save_qiniu url
+        if rst
+          user = User.find_by_id(params[:id])
+          user.url = url
+          flash[:avatar_notice] = "头像更新成功"
+          flash[:avatar_notice] = "头像更新成功" unless user.save
+          format.html { redirect_to user_path user }
+        end
+      else
+        format.html { redirect_to root_path }
+      end  
+    end
+  end
+
+  private
+    def cropping?
+     !params[:crop_x].blank? && !params[:crop_y].blank? && !params[:crop_w].blank? && !params[:crop_h].blank? && !params[:url].blank? && !params[:id].blank?
+    end
+    # save image to qiniu after mogr
+    def avatar_save_qiniu key
+      index = key.sub('.jpg', '')
+      mini_avatar = "#{index}_mini.jpg"
+      small_avatar = "#{index}_small.jpg"
+      large_avatar = "#{index}_large.jpg"
+      Qiniu::RS.image_mogrify_save_as("ppst", mini_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_MW}x#{User::AVATAR_MH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{mini_avatar}") })
+      Qiniu::RS.image_mogrify_save_as("ppst", small_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_SW}x#{User::AVATAR_SH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{small_avatar}") })
+      Qiniu::RS.image_mogrify_save_as("ppst", large_avatar, Qiniu::RS.get('ppst',key)["url"], {:crop => "!#{User::AVATAR_LW}x#{User::AVATAR_LH}a#{params[:crop_x]}a#{params[:crop_y]}", "save-as".to_sym => UrlSafeBase64Encode("ppst:#{large_avatar}") })
+    end
 
 end

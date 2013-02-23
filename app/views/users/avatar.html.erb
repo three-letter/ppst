@@ -5,22 +5,22 @@
 
 <% content_for :head do %>
 <script type="text/javascript" charset="utf-8">
-  jQuery(function($){
-      $('#cropbox').Jcrop({
+  function jcrop_init(){
+  $('#cropbox').Jcrop({
 onChange: update_crop,
 onSelect: update_crop,
 setSelect: [30, 30, 100, 100],
 aspectRatio: 1
 });
-      });
+}
 
 function update_crop(coords) {
   var rx = <%= User::AVATAR_SW %>/coords.w;
   var ry = <%= User::AVATAR_SH %>/coords.h;
-  var ratio = $("#img_w").val / <%= User::AVATAR_LW %>;
+  var ratio = $("#img_w").val() / $('#cropbox').width();
   $('#preview').css({
-width: Math.round(rx * <%= User::AVATAR_LW %>) + 'px',
-height: Math.round(ry * <%= User::AVATAR_LH %>) + 'px',
+width: Math.round(rx * $('#cropbox').width()) + 'px',
+height: Math.round(ry * $('#cropbox').height()) + 'px',
 marginLeft: '-' + Math.round(rx * coords.x) + 'px',
 marginTop: '-' + Math.round(ry * coords.y) + 'px'
 });
@@ -36,26 +36,30 @@ $("#crop_h").val(Math.round(coords.h * ratio));
   <legend>修改用户头像</legend>
   <%= render "casts/up_qiniu" %>
   <%= hidden_field_tag :img_w, 0 %>
+  <%= hidden_field_tag :img_h, 0 %>
+  <img src="" class="hidden" id="img_src">
+  <img src="" class="hidden" id="img_original">
 
-
-  <div id="crop-area">
+  <div id="crop_area" class="hide">
   <div class='span5 '>
     拖动图片中的方框进行裁剪
     <div>
       <%= image_tag "", :id => 'cropbox' %>
     </div>
     <div>
-      <%= form_for @user, :class => "form-horizontal" do |f| %>
+      <%= form_tag url_for(controller: 'users',action: 'avatar_save'), :class => "form-horizontal" do %>
+        <%= hidden_field_tag :id, @user.id %>
+        <%= hidden_field_tag :url %>
         <div class="control-group">
           <label class="control-label" for="user_name"></label>
           <div class="controls">
             <% for attribute in [:crop_x, :crop_y, :crop_w, :crop_h] %>
-              <%= f.hidden_field attribute, :id => attribute %>
+              <%= hidden_field_tag attribute, '', :id => attribute %>
             <% end %>
           </div>
         </div>
         <div class="form-actions">
-          <%= f.submit "裁剪", :class => "btn btn-primart" %>
+          <%= submit_tag "裁剪", :class => "btn btn-primart" %>
         </div>
       <% end %>
     </div>
@@ -91,6 +95,17 @@ $("#crop_h").val(Math.round(coords.h * ratio));
         done: function(e,t){
           $('.progress .bar').css('width',100 + '%');
           $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
+          $('#url').val("<%= @upload_key %>");
+          $('#img_original').attr("src", "<%= get_avatar @upload_key %>");
+          $('#img_original').load(function(){
+            $('#cropbox').attr("src", "<%= get_crop_avatar @upload_key %>");
+            $('#preview').attr("src", "<%= get_crop_avatar @upload_key %>");
+            $('#img_h').val(this.height);
+            $('#img_w').val(this.width);
+            $('#videoupload').hide();
+            $('#crop_area').show();
+            jcrop_init();
+          });
         }
       });    
   });
