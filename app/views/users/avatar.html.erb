@@ -37,14 +37,14 @@ $("#crop_h").val(Math.round(coords.h * ratio));
   <%= render "casts/up_qiniu" %>
   <%= hidden_field_tag :img_w, 0 %>
   <%= hidden_field_tag :img_h, 0 %>
-  <img src="" class="hidden" id="img_src">
-  <img src="" class="hidden" id="img_original">
+  <img src="<%= @user.avatar_type(:small) %>" class="hidden" id="img_src">
+  <img src="<%= @user.avatar_type(:small) %>" class="hidden" id="img_original">
 
   <div id="crop_area" class="hide">
   <div class='span5 '>
     拖动图片中的方框进行裁剪
     <div>
-      <%= image_tag "", :id => 'cropbox' %>
+      <%= image_tag @user.avatar_type(:small), :id => 'cropbox' %>
     </div>
     <div>
       <%= form_tag url_for(controller: 'users',action: 'avatar_save'), :class => "form-horizontal" do %>
@@ -67,7 +67,7 @@ $("#crop_h").val(Math.round(coords.h * ratio));
   <div class='span2' style="margin-top:0px;">
     这是你在网站的头像图标
     <div id="div-preview" style="overflow:hidden;width:<%= User::AVATAR_SW %>px;height:<%= User::AVATAR_SH %>px">
-      <%= image_tag "", :id => "preview" %>
+      <%= image_tag @user.avatar_type(:small), :id => "preview" %>
     </div>
   </div>
   </div>

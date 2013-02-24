@@ -47,8 +47,9 @@ class User < ActiveRecord::Base
   end
 
   def avatar_type type
-    return "" if url.blank?
-    index = url.sub('.jpg', '')
+    default_url = "avatar_1_1361677063.jpg" 
+    img_url = url.blank? ? default_url : url
+    index = img_url.sub('.jpg', '')
     "http://ppst.qiniudn.com/#{index}_#{type.to_s}.jpg"
   end
 

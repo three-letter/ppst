@@ -76,7 +76,7 @@ class UsersController < ApplicationController
           user = User.find_by_id(params[:id])
           user.url = url
           flash[:avatar_notice] = "头像更新成功"
-          flash[:avatar_notice] = "头像更新成功" unless user.save
+          flash[:avatar_notice] = "头像更新失败" unless user.save
           format.html { redirect_to user_path user }
         end
       else

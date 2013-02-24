@@ -24,7 +24,7 @@
   <div class="control-group">
     <%= f.label :avatar, '头像', :class => 'control-label' %>
     <div class="controls">
-      <img src="http://ppst.qiniudn.com/avatar_1_1361674024_small.jpg" />
+      <%= image_tag @user.avatar_type(:small) %>
       <%= link_to '修改头像', avatar_path %>
     </div>
   </div>
