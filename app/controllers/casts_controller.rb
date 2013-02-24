@@ -20,7 +20,7 @@ class CastsController < ApplicationController
     @upload_auth   = get_upload_token
     @upload_action = gen_action key
     @upload_key = XXTEA.encrypt(XXTEA::SKEY,key)
-    Juggernaut.publish("/msg-#{@current_user.id}", "#{@current_user.id}");
+    #Juggernaut.publish("/msg-#{@current_user.id}", "#{@current_user.id}");
   end
 
   def create
