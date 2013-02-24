@@ -2,6 +2,13 @@
 用户信息
 <% end %>
 
+<% if flash[:avatar_notice] %>
+  <div class='alert alert-success'>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:avatar_notice] %>
+  </div>
+<% end %>
+
 <div class="profile_box span8">
 <%= form_for @user, :html => { :class => "simple_form form-horizontal", :multipart => true } do |f| %>
 
