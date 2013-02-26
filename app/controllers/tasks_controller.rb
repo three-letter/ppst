@@ -27,4 +27,10 @@ class TasksController < ApplicationController
     task.save
     redirect_to action: "index"
   end
+
+  def destroy
+    task = Task.find_by_id(params[:id])
+    task.destroy
+    redirect_to action: "index"
+  end
 end

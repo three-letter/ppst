@@ -5,4 +5,5 @@
       <% if @current_user.name == 'chx2103' %>
         <td><a href="<%= url_for(controller: "tasks", action: "done", id: task.id) %>"><div class="btn btn-success">done</div></a></td>
       <% end %>
+      <td><%= link_to "Delete", task_path(task), :method => :delete, :class => "btn btn-danger" %></td>
     </tr>
