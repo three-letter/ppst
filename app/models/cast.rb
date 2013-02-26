@@ -1,7 +1,8 @@
 #coding: utf-8
 
 class Cast < ActiveRecord::Base
-  attr_accessible :free_time, :price, :title, :user_id, :url
+  attr_accessible :free_time, :price, :title, :user_id, :url, :tags
+  attr_accessor :tags
 
   validates :title, :presence => { :message => "标题不能为空" },
                     :length => { :maximum => 32, :message => "标题最长为32字符" }

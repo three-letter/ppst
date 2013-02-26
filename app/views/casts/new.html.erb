@@ -33,9 +33,22 @@
         </div>
       </div>
 
+      <div class="control-group">
+        <%= f.label :tags, "标签", :class => "control-label" %>
+        <div class="controls">
+          <%= f.hidden_field :tags %>
+          <div class="textboxlist " >
+            <ul class="textboxlist-bits">
+              <li class="textboxlist-bit textboxlist-bit-editable">
+              <input type="text" class="textboxlist-bit-editable-input" value="" style="width: 45px;display: none;">
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
       <div class="form-actions">
-        <%= f.submit '确定并上传视频', :id => "cast_share_btn", :class => 'btn btn-primary' %>
+        <%= f.submit '确定', :id => "cast_share_btn", :class => 'btn btn-primary' %>
         <%= link_to '取消', casts_path, :class => 'btn' %>
       </div>
 
@@ -44,28 +57,55 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  
+
   $(function () {
       // Initialize the jQuery File Upload widget:
       $('#videoupload').fileupload({
-        multipart: true,
-        url: "http://up.qbox.me/upload",
-        dataType: "json",
-        add: function(e,t){
-          var n,r;
-          return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
-        },
-        progress: function(e,t){
-          var progress = parseInt(t.loaded / t.total * 100, 10);
-          $('.progress .bar').css('width',progress + '%');
-          $('.progress .bar').html("<font color='green'>" + progress + "%</font>");
-        },
-        done: function(e,t){
-          $('.progress .bar').css('width',100 + '%');
-          $('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
-          $("#cast_url").val("<%= @upload_key %>");   
-        }
-      });    
-  });
+multipart: true,
+url: "http://up.qbox.me/upload",
+dataType: "json",
+add: function(e,t){
+var n,r;
+return r=/(\.|\/)(mp4)$/i,n=t.files[0],r.test(n.type)||r.test(n.name)?(t.context=$(tmpl("template-upload",n)),$("#fileupload-area").html(t.context),t.submit()):alert("只支持mp4格式")
+},
+progress: function(e,t){
+var progress = parseInt(t.loaded / t.total * 100, 10);
+$('.progress .bar').css('width',progress + '%');
+$('.progress .bar').html("<font color='green'>" + progress + "%</font>");
+},
+done: function(e,t){
+$('.progress .bar').css('width',100 + '%');
+$('.progress .bar').html("<font color='green'>" + 100 + "%</font>");
+$("#cast_url").val("<%= @upload_key %>");   
+}
+});   
+
+		//点击外层显示框时 主动focus标签输入框
+		$("ul.textboxlist-bits").click(function(){
+			$(".textboxlist-bit-editable-input").show();
+			$(".textboxlist-bit-editable-input").focus();
+      });
+		$("ul.textboxlist-bits").live('blur',function(){
+			$(".textboxlist-bit-editable-input").hide();
+      });
+		//输入完成后显示结果
+		$(".textboxlist-bit-editable-input").blur(function(){
+			var tag = $(".textboxlist-bit-editable-input").val();
+			if(tag.length==0)
+			return;
+			var new_tag = '<li class="textboxlist-bit textboxlist-bit-box textboxlist-bit-box-deletable">';
+			new_tag += tag; 
+			new_tag += '<a class="textboxlist-bit-box-deletebutton" href="#"></a></li>';
+			$(new_tag).insertBefore($(".textboxlist-bit-editable"));
+			$(".textboxlist-bit-editable-input").val('');
+			init_tag();
+      });
+		//动态生成的标签中 需要使用live委托事件
+		$("a.textboxlist-bit-box-deletebutton").live('click',function(){
+			$(this).parent().remove();
+      init_tag();
+			});
+
+});
 
 </script>
