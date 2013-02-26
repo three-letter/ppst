@@ -1,6 +1,7 @@
 <tr>
       <td><icon class="<%= task.done? ? 'icon-folder-close' : 'icon-folder-open' %>"></icon></td>
       <td><%= task.info %></td>
+      <td><%= task.user.name %></td>
       <% if @current_user.name == 'chx2103' %>
         <td><a href="<%= url_for(controller: "tasks", action: "done", id: task.id) %>"><div class="btn btn-success">done</div></a></td>
       <% end %>
