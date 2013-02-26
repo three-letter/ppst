@@ -20,7 +20,9 @@
       <td><icon class="icon-folder-close"></icon></td>
       <td><%= done.info %></td>
       <td><%= done.user.name %></td>
-      <td><%= link_to "Delete", task_path(done), :method => :delete, :class => "btn btn-danger" %></td>
+      <% if @current_user.name == 'chx2103' %>
+        <td><%= link_to "Delete", task_path(done), :method => :delete, :class => "btn btn-danger" %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>
