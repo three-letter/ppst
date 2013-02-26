@@ -1,12 +1,13 @@
 Ppst::Application.routes.draw do
   
-
   resources :users
   resources :sessions, :only => [:new, :create, :destroy]
   
   resources :casts do
     resources :comments
   end
+  
+  resources :tasks
 
   match "/signup",  :to => "users#new"
   match "/login",   :to => "sessions#new"

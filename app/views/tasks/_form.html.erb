@@ -1,0 +1,11 @@
+<%= form_for @task, :html => {:remote => true, :class => "simple_form form-horizontal"} do |f| %>
+  <fieldset>
+    <div class="control-group">
+      <%= f.text_area :info, :rows => 4, :class => "input-xxlarge", :placeholder => "请输入待办任务描述信息" %>
+      <p style="color:red" id="task_error"></p>
+    </div>
+    <div class="form-actions">
+      <%= f.submit "确定", :class => "btn btn-primary" %>
+    </div>
+  </fieldset>
+<% end%>

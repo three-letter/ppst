@@ -11,7 +11,7 @@ class CastsController < ApplicationController
   before_filter :authentication, :except => :set_url
 
   def index
-    @casts = Cast.order("updated_at desc").all
+    @casts = Cast.includes(:user).includes(:comments).find(:all, :order => "created_at desc ")
   end
 
   def new

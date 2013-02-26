@@ -1,0 +1,3 @@
+$("#task_error").html("<%= flash[:notice_task] %>");
+
+$("#todo").append("<%= escape_javascript(render(:partial => "task",:locals => {:task => @task})) %>");

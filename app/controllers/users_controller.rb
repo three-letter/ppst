@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def home
-    user_id = current_user.id if params[:id].blank?
+    user_id = @current_user.id if params[:id].blank?
     @user = User.find_by_id(user_id)
     @casts = Cast.recent_casts(user_id, 5)
     @comments = Comment.recent_comments(user_id, 5)

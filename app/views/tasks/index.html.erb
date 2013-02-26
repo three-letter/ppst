@@ -1,0 +1,31 @@
+<% content_for :title do %>
+  任务列表
+<% end%>
+
+<div class="span8 profile_box">
+
+<h4>待办任务</h4>
+<table class="table" id="todo">
+  <% @todos.each do |todo| %>
+    <%= render :partial => "task", :locals => {task: todo} %>
+  <% end %>
+</table>
+
+<hr>
+
+<h4>已办任务</h4>
+<table class="table">
+  <% @dones.each do |done| %>
+<tr>
+      <td><icon class="icon-folder-close"></icon></td>
+      <td><%= done.info %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<legend>新建待办任务</legend>
+
+<%= render "form" %>
+
+</div>
