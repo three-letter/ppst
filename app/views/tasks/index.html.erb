@@ -18,7 +18,7 @@
   <% @dones.each do |done| %>
 <tr>
       <td><icon class="icon-folder-close"></icon></td>
-      <td><%= done.info %></td>
+      <td><del><%= done.info %></del></td>
       <td><%= done.user.name %></td>
       <% if @current_user.name == 'chx2103' %>
         <td><%= link_to "Delete", task_path(done), :method => :delete, :class => "btn btn-danger" %></td>
