@@ -34,9 +34,9 @@
       </div>
 
       <div class="control-group">
-        <%= f.label :tags, "标签", :class => "control-label" %>
+        <%= f.label :tag, "标签", :class => "control-label" %>
         <div class="controls">
-          <%= f.hidden_field :tags %>
+          <%= f.hidden_field :tag %>
           <div class="textboxlist " >
             <ul class="textboxlist-bits">
               <li class="textboxlist-bit textboxlist-bit-editable">
@@ -80,31 +80,40 @@ $("#cast_url").val("<%= @upload_key %>");
 }
 });   
 
-		//点击外层显示框时 主动focus标签输入框
-		$("ul.textboxlist-bits").click(function(){
-			$(".textboxlist-bit-editable-input").show();
-			$(".textboxlist-bit-editable-input").focus();
+//点击外层显示框时 主动focus标签输入框
+$("ul.textboxlist-bits").click(function(){
+    $(".textboxlist-bit-editable-input").show();
+    $(".textboxlist-bit-editable-input").focus();
+    });
+$("ul.textboxlist-bits").live('blur',function(){
+    $(".textboxlist-bit-editable-input").hide();
+    });
+//输入完成后显示结果
+$(".textboxlist-bit-editable-input").blur(function(){
+    var tag = $(".textboxlist-bit-editable-input").val();
+    if(tag.length==0)
+    return;
+    var new_tag = '<li class="textboxlist-bit textboxlist-bit-box textboxlist-bit-box-deletable">';
+    new_tag += tag; 
+    new_tag += '<a class="textboxlist-bit-box-deletebutton" href="#"></a></li>';
+    $(new_tag).insertBefore($(".textboxlist-bit-editable"));
+    $(".textboxlist-bit-editable-input").val('');
+    init_tag();
+    });
+//动态生成的标签中 需要使用live委托事件
+$("a.textboxlist-bit-box-deletebutton").live('click',function(){
+    $(this).parent().remove();
+    init_tag();
+    });
+
+function init_tag(){
+  var tags = '';
+  $(".textboxlist").children(".textboxlist-bits").children(".textboxlist-bit-box-deletable").each(function(){
+      tags += $(this).text() + "-";
       });
-		$("ul.textboxlist-bits").live('blur',function(){
-			$(".textboxlist-bit-editable-input").hide();
-      });
-		//输入完成后显示结果
-		$(".textboxlist-bit-editable-input").blur(function(){
-			var tag = $(".textboxlist-bit-editable-input").val();
-			if(tag.length==0)
-			return;
-			var new_tag = '<li class="textboxlist-bit textboxlist-bit-box textboxlist-bit-box-deletable">';
-			new_tag += tag; 
-			new_tag += '<a class="textboxlist-bit-box-deletebutton" href="#"></a></li>';
-			$(new_tag).insertBefore($(".textboxlist-bit-editable"));
-			$(".textboxlist-bit-editable-input").val('');
-			init_tag();
-      });
-		//动态生成的标签中 需要使用live委托事件
-		$("a.textboxlist-bit-box-deletebutton").live('click',function(){
-			$(this).parent().remove();
-      init_tag();
-			});
+  $("#cast_tag").val(tags);
+}
+
 
 });
 

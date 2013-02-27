@@ -20,6 +20,10 @@
           <%= @cast.title %>
         </div>
         <div class="cast_time">
+          <% unless @cast.tag_names.blank? %>
+            <icon class="icon-tags"></icon>
+            <%= @cast.tag_names %>
+          <% end %>
           <blockquote class="pull-right">
             <small><%= @cast.user.name %>于<%= time_ago_in_words(@cast.created_at) %>前分享</small>
           </blockquote>

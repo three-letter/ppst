@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130226065452) do
+ActiveRecord::Schema.define(:version => 20130227025708) do
 
   create_table "casts", :force => true do |t|
     t.integer  "user_id"
@@ -23,12 +23,23 @@ ActiveRecord::Schema.define(:version => 20130226065452) do
     t.string   "url"
   end
 
+  create_table "casts_tags", :id => false, :force => true do |t|
+    t.integer "cast_id"
+    t.integer "tag_id"
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "cast_id"
     t.string   "content",    :limit => 128
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tasks", :force => true do |t|

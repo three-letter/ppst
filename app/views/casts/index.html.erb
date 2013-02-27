@@ -31,9 +31,9 @@
         </div>
         <hr>
         <div class="casts_footer">
-          <div class="casts_footer_icon pull-left"><i class="icon-tags"></i>vim</div>
-          <div class="casts_footer_icon pull-left"><i class="icon-thumbs-up"></i>(0)</div>
-          <div class="casts_footer_icon pull-left"><i class="icon-thumbs-down"></i>(0)</div>
+          <% unless cast.tag_names.blank? %>
+            <div class="casts_footer_icon pull-left"><i class="icon-tags"></i><%= cast.tag_names %></div>
+          <% end%>
           <div class="casts_footer_icon pull-left"><i class="icon-comment"></i>(<%= cast.comments.size %>)</div>
         </div>
       </div>

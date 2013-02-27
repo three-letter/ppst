@@ -28,6 +28,7 @@ class CastsController < ApplicationController
     @cast.url = XXTEA.decrypt(XXTEA::SKEY,@cast.url)
     respond_to do |format|
       if @cast.save
+        tagging(@cast)
         format.html {redirect_to action: "show", id: @cast.id }
       else
         @cast.url = XXTEA.encrypt(XXTEA::SKEY,@cast.url)
@@ -42,5 +43,20 @@ class CastsController < ApplicationController
   def show
     @cast = Cast.find_by_id(params[:id])
   end
+
+  private
+
+    def tagging cast
+      tag = cast.tag
+      unless tag.blank?
+        tags = tag.split("-")
+        tags.each do |t|
+          tag_obj = Tag.find_by_name(t.strip)
+          tag_obj = Tag.create(name: t.strip) if tag_obj.blank?
+          cast.tags << tag_obj
+
+        end
+      end
+    end
 
 end
