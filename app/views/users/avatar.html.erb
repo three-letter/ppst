@@ -32,6 +32,14 @@ $("#crop_h").val(Math.round(coords.h * ratio));
 </script>
 <% end%>
 
+
+<div class="span11">
+<ul class="breadcrumb">
+  <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
+  <li class="active">Avatar Crop</li>
+</ul>
+</div>
+
 <div class="profile_box span8">
   <legend>修改用户头像</legend>
   <%= render "casts/up_qiniu" %>
