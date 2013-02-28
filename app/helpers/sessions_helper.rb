@@ -29,6 +29,11 @@ module SessionsHelper
     entry_uri_64.strip.gsub("+","-").gsub("/", "_")
   end
 
+  def get_download_token
+    Qiniu::RS.generate_download_token :expires_in => 3600,
+                                      :pattern    => "*/*" 
+  end
+
   def get_upload_token
     Qiniu::RS.generate_upload_token :scope                =>  "ppst",
                                     :expires_in           =>  60 * 30,
