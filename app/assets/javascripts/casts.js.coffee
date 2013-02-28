@@ -9,7 +9,7 @@ playVideo = ->
       ready: ->
         $(this).jPlayer("setMedia", {
           m4v: "http://ppst.qiniudn.com/" + url
-        })
+        }).jPlayer("play")
       swfPath: "/assets"
       supplied: "m4v"
       size: { width: "640px", height: "360px", cssClass: "jp-video-360p"}
