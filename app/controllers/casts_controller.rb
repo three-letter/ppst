@@ -12,7 +12,6 @@ class CastsController < ApplicationController
 
   def index
     @casts = Cast.includes(:user).includes(:comments).find(:all, :order => "created_at desc ")
-    request.headers['Authorization'] = get_download_token 
   end
 
   def new
