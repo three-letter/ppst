@@ -14,10 +14,6 @@ body {
   padding-top: 20px;
 }
 
-.toolbar {
-  width: 900px;
-}
-
 .line {
   border-top: 1px dashed #C6C6C6;
   margin-bottom: 15px;
@@ -27,7 +23,7 @@ body {
   background-color: #FFFFFF;
   border-radius: 6px 6px 6px 6px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
-  margin: 0 0 20px 20px;
+  margin: 0 0 20px -30px;
   padding: 10px;
 }
 
@@ -63,7 +59,7 @@ blockquote {
 .rsidebar {
   float: left;
   margin-left: 15px;
-  width: 200px;
+  width: 250px;
   background: none repeat scroll 0 0 #FFFFFF;
   border-color: #ECECEC #ECECEC #CACACA;
   border-image: none;
@@ -93,7 +89,7 @@ blockquote {
   margin-left: 5px;
 }
 .rsidebar_content ul li {
-  width: 85px;
+  width: 100px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -101,7 +97,7 @@ blockquote {
   display: inline-block;
   font-size: 14px;
   margin-bottom: 6px;
-  margin-right: 6px;
+  margin-right: 16px;
   opacity: 0.6;
   padding: 1px 2px;
 }
