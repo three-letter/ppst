@@ -104,8 +104,4 @@ blockquote {
   margin-right: 6px;
   opacity: 0.6;
   padding: 1px 2px;
-  transition: opacity 0.2s ease-in-out 0s;
 }
-li {
-  line-height: 20px;
-}                                                  }
