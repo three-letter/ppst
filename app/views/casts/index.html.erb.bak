@@ -1,0 +1,47 @@
+<% content_for :title do %>
+  首页 
+<% end %>
+
+<% if flash[:notice] %>
+  <div class='alert alert-success'>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<div class="span11">
+<ul class="breadcrumb">
+  <li class="active">Home</li>
+</ul>
+</div>
+
+<div class="span9">
+  <% @casts.each do |cast| %>
+    <div class="poster span4">
+
+      <div class="avatar_box">
+        <div class="avatar_green">
+          <img src="<%= cast.user.avatar_type(:small) %>"/ >
+        </div>
+      </div>
+
+      <div class="casts">
+        <div class="casts_header">
+          <h3><%= cast.user.name %></h3>
+          <p>-在<%= time_ago_in_words(cast.updated_at) %>前更新</p>
+        </div>
+        <hr>
+        <div class="casts_content">
+          <a href="<%= cast_path cast %>"><%= cast.title %></a>
+        </div>
+        <hr>
+        <div class="casts_footer">
+          <% unless cast.tag_names.blank? %>
+            <div class="casts_footer_icon pull-left"><i class="icon-tags"></i><%= cast.tag_names %></div>
+          <% end%>
+          <div class="casts_footer_icon pull-left"><i class="icon-comment"></i>(<%= cast.comments.size %>)</div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

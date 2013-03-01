@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
     default_url = "avatar_1_1361677063.jpg" 
     img_url = url.blank? ? default_url : url
     index = img_url.sub('.jpg', '')
-    "http://ppst.qiniudn.com/#{index}_#{type.to_s}.jpg"
+    "http://ppstd.dn.qbox.me/#{index}_#{type.to_s}.jpg"
   end
 
 

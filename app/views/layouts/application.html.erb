@@ -10,69 +10,75 @@
     <%= yield(:head) %>
   </head>
   <body>
-
-    <div class="container">
-      <!-- header start -->
-      <div class="navbar">
-
-        <div class="navbar-inner">
-          <a href="<%= root_path %>" class="brand">PPST</a>
+  
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="/">PPST</a>
           <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="">Cast</a>
+              </li>
+              <li>
+                <a href="">Tag</a>
+              </li>
+            </ul>
+            
+            <form class="navbar-search pull-left" method="get" action="/metadocs" accept-charset="UTF-8">
+              <div style="margin:0;padding:0;display:inline">
+                <input id="q" class="input-large search-query" type="text" value="" placeholder="Search..." name="q">
+                <input id="tab" type="hidden" value="" name="tab">
+                <a id="clear_search_query" title="Clear search query input..." href="#"></a>
+              </div>
+            </form>
 
+            <ul class="nav pull-right">
+              
             <% unless sign_in? %>
               <ul class="nav actions">
                 <li><a href="<%= login_path %>" data-link="modal" data-target="#login-modal">Login</a></li>
                 <li><a href="<%= signup_path %>" data-link="modal" data-target="#signup-modal">Sign up</a></li>
               </ul>
             <% else %>
-              <ul class="nav actions user">
-                <li><a href=""><span id="sys-msg" class="badge">0</span></a></li>
-                <li class="offset-right dropdown">
+              <li>
+                <a href=""><span id="sys-msg" class="badge">0</span></a>
+              </li>
+              <li class="offset-right dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown">
                   <img src="<%= current_user.avatar_type(:mini) %>" style="border-radius:50% 50% 50% 50%" /> <b class="caret"></b>
                 </a>
                 <ul class="dropdown-menu">
                   <li>
                     <a href="<%= home_path %>"> <i class="icon-home"></i> 我的主页</a>
+                  </li>
+                  <li>
+                    <a href="<%= user_path current_user %>"><i class="icon-wrench"></i> 个人信息</a>
                   </li>                   
                   <li>
-                  <a href="<%= user_path current_user %>"><i class="icon-wrench"></i> 个人信息</a>
-                  </li>                   
-                  <li>
-                  <a href="<%= logout_path %>"><i class="icon-off"></i> 退出</a>
-                  </li>                   
+                    <a href="<%= logout_path %>"><i class="icon-off"></i> 退出</a>
+                  </li> 
                 </ul>
-                </li>
-              </ul>
-            <% end %>
-
-            <ul class="nav">
-              <li><a href="<%= new_cast_path %>">Casts</a></li>
-              <li><a href="">Demand</a></li>
-              <li><a href="">About</a></li>
+              </li>
+             <% end %>
             </ul>
-          </div><!--/.nav-collapse -->
+          </div>
         </div>
-
       </div>
-      <!-- header end -->
-
-      <!-- content start -->
-
-      <div class="content row">
-        <%= yield %>
-      </div> 
-
-      <!-- content end -->
-
-      <hr>
-      <div class="footer">
-        <p><i class="icon-envelope"></i> lyu302@gmail.com</p>
-      </div>
-
-
     </div>
 
+    <div class="content row">
+      <%= yield %>
+    </div>
+
+    <footer class="container">
+      <hr>
+      <div class="row">
+        <div class="offset5 span2">
+          <p><i class="icon-envelope"></i> lyu302@gmail.com</p>
+        </div>
+      </div>
+    </footer>
 
   </body>
 </html>

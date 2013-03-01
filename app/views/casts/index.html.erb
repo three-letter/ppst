@@ -9,39 +9,66 @@
   </div>
 <% end %>
 
-<div class="span11">
-<ul class="breadcrumb">
-  <li class="active">Home</li>
-</ul>
+<div class="toolbar offset1">
+  <ul class="breadcrumb">
+    <li class="">
+      <a href="/">Home</a>
+      <span class="divider">/</span>
+    </li>
+    <li class="active">最新视播</li>
+  </ul>
 </div>
 
-<div class="span9">
-  <% @casts.each do |cast| %>
-    <div class="poster span4">
-
-      <div class="avatar_box">
-        <div class="avatar_green">
-          <img src="<%= cast.user.avatar_type(:small) %>"/ >
-        </div>
+<div class="span9 offset1">
+  <div class="profile">
+    
+  <% @casts.each do |cast| %>  
+    <div class="casts row">
+      <div class="span3">
+        <a href=""><img class="case_img" src="<%= cast.image_url %>" /></a>
       </div>
+      <div class="span6 case">
+        <div class="case_title">
+          <a href=""><%= cast.title %></a>
+        </div>
+        <div class="case_desc">
+          <blockquote class="pull-left">
+            视频群聊和内容共享服务Rabbit刚获得330万美元的种子期融资，投资方包括Google Ventures和CrunchFund等。目前Rabbit应用只支持Mac平台。它和一般视频群聊最大不同在于，它同时也是一个屏幕内容共享服务。比如Rabbit可以很轻松地让你和一群朋友远程看电影并实时吐槽了：
 
-      <div class="casts">
-        <div class="casts_header">
-          <h3><%= cast.user.name %></h3>
-          <p>-在<%= time_ago_in_words(cast.updated_at) %>前更新</p>
+          </blockquote>
         </div>
-        <hr>
-        <div class="casts_content">
-          <a href="<%= cast_path cast %>"><%= cast.title %></a>
-        </div>
-        <hr>
-        <div class="casts_footer">
-          <% unless cast.tag_names.blank? %>
-            <div class="casts_footer_icon pull-left"><i class="icon-tags"></i><%= cast.tag_names %></div>
-          <% end%>
-          <div class="casts_footer_icon pull-left"><i class="icon-comment"></i>(<%= cast.comments.size %>)</div>
+        <div>
+          <div class="pull-left">
+            <i class="icon-tags"></i> <%= cast.tag_names %>
+            <i class="icon-comment"></i> 5
+          </div>
+          <div class="case_auth">
+            - <%= cast.user.name %>于<%= time_ago_in_words(cast.updated_at) %>前发布</p>
+          </div>
         </div>
       </div>
     </div>
+    <div class="line"></div>
   <% end %>
+
+  </div>
 </div>
+
+
+<div class="rsidebar">
+  <h5 class="rsidebar_title">热门标签</h5>
+  <div class="rsidebar_content">
+    <ul>
+      <li title="ruby"><i class="icon-tag rsidebar_tag"></i> ruby </li>
+      <li title="rails"><i class="icon-tag rsidebar_tag"></i> rails </li> 
+      <li title="nginx"><i class="icon-tag rsidebar_tag"></i> nginx </li>
+      <li title="gem"><i class="icon-tag rsidebar_tag"></i> gem </li>
+      <li title="postgresql"><i class="icon-tag rsidebar_tag"></i> postgresql </li>
+      <li title="thin"><i class="icon-tag rsidebar_tag"></i> thin </li> 
+      <li title="heroku"><i class="icon-tag rsidebar_tag"></i> heroku </li>
+      <li title="mysql"><i class="icon-tag rsidebar_tag"></i> mysql </li>
+    </ul>
+  </div>
+</div>
+
+

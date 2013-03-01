@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Ppst" %></title>
+    <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Ppst" %>">
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+
+    <div class="container">
+      <!-- header start -->
+      <div class="navbar">
+
+        <div class="navbar-inner">
+          <a href="<%= root_path %>" class="brand">PPST</a>
+          <div class="nav-collapse">
+
+            <% unless sign_in? %>
+              <ul class="nav actions">
+                <li><a href="<%= login_path %>" data-link="modal" data-target="#login-modal">Login</a></li>
+                <li><a href="<%= signup_path %>" data-link="modal" data-target="#signup-modal">Sign up</a></li>
+              </ul>
+            <% else %>
+              <ul class="nav actions user">
+                <li><a href=""><span id="sys-msg" class="badge">0</span></a></li>
+                <li class="offset-right dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="<%= current_user.avatar_type(:mini) %>" style="border-radius:50% 50% 50% 50%" /> <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="<%= home_path %>"> <i class="icon-home"></i> 我的主页</a>
+                  </li>                   
+                  <li>
+                  <a href="<%= user_path current_user %>"><i class="icon-wrench"></i> 个人信息</a>
+                  </li>                   
+                  <li>
+                  <a href="<%= logout_path %>"><i class="icon-off"></i> 退出</a>
+                  </li>                   
+                </ul>
+                </li>
+              </ul>
+            <% end %>
+
+            <ul class="nav">
+              <li><a href="<%= new_cast_path %>">Casts</a></li>
+              <li><a href="">Demand</a></li>
+              <li><a href="">About</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+
+      </div>
+      <!-- header end -->
+
+      <!-- content start -->
+
+      <div class="content row">
+        <%= yield %>
+      </div> 
+
+      <!-- content end -->
+
+      <hr>
+      <div class="footer">
+        <p><i class="icon-envelope"></i> lyu302@gmail.com</p>
+      </div>
+
+
+    </div>
+
+
+  </body>
+</html>

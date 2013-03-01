@@ -4,7 +4,7 @@ module UsersHelper
  
   def get_avatar key_crypt
     key = XXTEA.decrypt(XXTEA::SKEY, key_crypt)
-    "http://ppst.qiniudn.com/#{key}"
+    "http://ppstd.dn.qbox.me/#{key}"
   end
 
   def get_crop_avatar key_crypt

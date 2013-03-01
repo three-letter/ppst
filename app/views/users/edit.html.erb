@@ -17,7 +17,7 @@
   <div class="control-group">
     <%= f.label :avatar, '头像', :class => 'control-label' %>
     <div class="controls">
-      <%= image_tag "http://ppst.qiniudn.com/1-Sunset.jpg?imageMogr/crop/!56x56a400a250", :class => "avatar" %>
+      <%= image_tag @user.avatar_type(:small), :class => "avatar" %>
       <a href="">修改头像</a>
     </div>
   </div>

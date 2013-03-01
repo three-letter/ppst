@@ -16,7 +16,11 @@ class Cast < ActiveRecord::Base
   scope :recent_casts, lambda { |uid, limit| joins(:user).order("created_at desc").where("users.id = ?", uid).limit(limit) }
 
   def video_url
-    "http://ppst.qiniudn.com/#{url}"
+    "http://ppstd.dn.qbox.me/#{url}"
+  end
+
+  def image_url
+    "http://ppstd.dn.qbox.me/#{url}/?vframe/jpg/offset/10/w/160/h/100"
   end
 
   def tag_names
@@ -24,6 +28,7 @@ class Cast < ActiveRecord::Base
     tags.each do |tag|
       names << tag.name
     end
+    names << "暂无" if names.size == 0
     names.join(" ")
   end
 
