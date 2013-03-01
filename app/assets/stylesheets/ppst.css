@@ -63,7 +63,7 @@ blockquote {
 .rsidebar {
   float: left;
   margin-left: 15px;
-  width: 160px;
+  width: 200px;
   background: none repeat scroll 0 0 #FFFFFF;
   border-color: #ECECEC #ECECEC #CACACA;
   border-image: none;
@@ -93,7 +93,7 @@ blockquote {
   margin-left: 5px;
 }
 .rsidebar_content ul li {
-  width: 60px;
+  width: 85px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;

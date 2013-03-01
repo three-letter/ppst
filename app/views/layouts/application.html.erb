@@ -13,7 +13,7 @@
   
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-        <div class="">
+        <div class="container">
           <a class="brand" href="/">PPST</a>
           <div class="nav-collapse">
             <ul class="nav">
@@ -67,11 +67,13 @@
       </div>
     </div>
 
-    <div class="content row">
-      <%= yield %>
+    <div class="container">
+      <div class="content">
+        <%= yield %>
+      </div>
     </div>
 
-    <footer class="">
+    <footer class="container">
       <hr>
       <div class="row">
         <div class="offset5 span2">
