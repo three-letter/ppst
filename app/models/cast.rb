@@ -20,7 +20,7 @@ class Cast < ActiveRecord::Base
   end
 
   def image_url
-    "http://ppstd.dn.qbox.me/#{url}/?vframe/jpg/offset/10/w/160/h/100"
+    "http://ppstd.dn.qbox.me/#{url}?vframe/jpg/offset/10/w/160/h/100"
   end
 
   def tag_names
