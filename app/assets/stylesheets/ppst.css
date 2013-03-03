@@ -6,6 +6,49 @@ body {
   line-height: 18px; 
 }
 
+/** login and regiest cdd **/
+form.login {
+  background: none repeat scroll 0 0 #FFFFFF;
+  border-radius: 6px 6px 6px 6px;
+  width: 500px;
+  box-shadow: 0 1px 6px #BBBBBB;
+  margin: 40px auto 50px;
+  padding: 20px 0px;
+}
+
+.username_box, .pwd_box {
+  background: none repeat scroll 0 0 white;
+  border: 1px solid #EEEEEE;
+  border-radius: 8px 8px 8px 8px;
+  font-size: 20px;
+  height: 55px;
+  line-height: 45px;
+  width: 350px;
+  margin: 30px auto;
+}
+
+.submit_box {
+  width: 350px;
+  margin: 30px auto;
+}
+
+.username_box input, .pwd_box input{
+  border: 0 none;
+  height: 30px;
+  line-height: 40px;
+  width: 200px;
+  margin: 8px 0px;
+}
+
+.login label {
+  font-family: "Hiragino Sans GB",hei,"microsoft yahei",sans-serif;
+  float:left;
+  color: gray;
+  width:80px;
+  font-size: 20px;
+  margin: 18px 15px;
+  text-align: right;
+}
 
 /** owen css **/
 
