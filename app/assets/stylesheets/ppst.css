@@ -6,6 +6,11 @@ body {
   line-height: 18px; 
 }
 
+img {
+    border: 0 none;
+    max-width: none;
+}
+
 /** login and regiest cdd **/
 form.login {
   background: none repeat scroll 0 0 #FFFFFF;
@@ -50,6 +55,17 @@ form.login {
   text-align: right;
 }
 
+.user_hint {
+  width: 180px;
+  text-align: left;
+  margin: 5px 0px 10px 10px;
+  font-size: 13px;
+}
+
+.home_field {
+  float: right;
+}
+
 /** owen css **/
 
 .content {
@@ -66,7 +82,7 @@ form.login {
   background-color: #FFFFFF;
   border-radius: 6px 6px 6px 6px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.05);
-  margin: 0 0 20px -30px;
+  margin: 0 0 20px 0px;
   padding: 10px;
 }
 
@@ -97,6 +113,44 @@ blockquote {
 .case_auth {
   float: right;
   margin-right: 5px;
+}
+
+
+.player {
+  margin: 20px 30px;
+  width: 640px;
+  padding-top: 30px 30px;
+}
+
+.cast_show {
+  margin: 1px;
+  padding-top: 20px;
+}
+
+.cast_user {
+  width: 60px;
+  float: left;
+}
+
+.cast_info {
+  width: 570px;
+  float: right;
+  word-break: break-all;
+}
+
+.cast_title {
+}
+
+.cast_time {
+  padding-top: 1px;
+}
+
+.cast_cmt {
+  margin-top: 20px;
+}
+
+.avatar {
+  border-radius: 50% 50% 50% 50%;
 }
 
 .rsidebar {
@@ -144,3 +198,5 @@ blockquote {
   opacity: 0.6;
   padding: 1px 2px;
 }
+
+

@@ -33,14 +33,12 @@ $("#crop_h").val(Math.round(coords.h * ratio));
 <% end%>
 
 
-<div class="span11">
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
   <li class="active">Avatar Crop</li>
 </ul>
-</div>
 
-<div class="profile_box span8">
+<div class="profile span9">
   <legend>修改用户头像</legend>
   <%= render "casts/up_qiniu" %>
   <%= hidden_field_tag :img_w, 0 %>
@@ -119,3 +117,14 @@ $("#crop_h").val(Math.round(coords.h * ratio));
   });
 
 </script>
+
+
+
+<div class="rsidebar">
+  <h5 class="rsidebar_title">友情提示</h5>
+  <div class="rsidebar_content">
+    <div class="user_hint">1）上传本地图片，支持JPG JPEG BMP格式</div>
+    <div class="user_hint">2）图片上传成功后，在图片预览处拖动方框进行头像选取</div>
+    <div class="user_hint">3）头像选取后，单击裁剪按钮完成头像的裁剪功能</div>
+  </div>
+</div>

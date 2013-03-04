@@ -17,17 +17,16 @@
     <li class="active">最新视播</li>
   </ul>
 
-<div class="span9">
-  <div class="profile">
+  <div class="profile span9">
     
   <% @casts.each do |cast| %>  
     <div class="casts row">
       <div class="span3">
-        <a href=""><img class="case_img" src="<%= cast.image_url %>" /></a>
+        <a href="<%= url_for cast_path cast %>"><img class="case_img" src="<%= cast.image_url %>" /></a>
       </div>
       <div class="span6 case">
         <div class="case_title">
-          <a href=""><%= cast.title %></a>
+          <a href="<%= url_for cast_path cast %>"><%= cast.title %></a>
         </div>
         <div class="case_desc">
           <blockquote class="pull-left">
@@ -41,7 +40,7 @@
             <i class="icon-comment"></i> 5
           </div>
           <div class="case_auth">
-            - <%= cast.user.name %>于<%= time_ago_in_words(cast.updated_at) %>前发布</p>
+            — <%= cast.user.name %>于<%= time_ago_in_words(cast.updated_at) %>前发布</p>
           </div>
         </div>
       </div>
@@ -50,7 +49,6 @@
   <% end %>
 
   </div>
-</div>
 
 
 <div class="rsidebar">

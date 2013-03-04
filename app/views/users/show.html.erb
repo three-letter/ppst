@@ -10,14 +10,12 @@
 <% end %>
 
 
-<div class="span11">
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
-  <li class="active">User Profile</li>
+  <li class="active">个人信息</li>
 </ul>
-</div>
 
-<div class="profile_box span8">
+<div class="profile span9">
 <%= form_for @user, :html => { :class => "simple_form form-horizontal" } do |f| %>
 
   <legend>基本信息</legend>
@@ -46,6 +44,20 @@
 
 <% end %>
 </div>
+
+
+
+<div class="rsidebar">
+  <h5 class="rsidebar_title">友情提示</h5>
+  <div class="rsidebar_content">
+    <div class="user_hint">1）上传头像，保持足够的活跃度，让他人更关注你</div>
+    <div class="user_hint">2）Verify账号，能够在交易中不断学习成长</div>
+    <div class="user_hint">3）Verify账号，能在分享中获取相应的报酬</div>
+  </div>
+</div>
+
+
+
 
 <script type="text/javascript" charset="utf-8">
   

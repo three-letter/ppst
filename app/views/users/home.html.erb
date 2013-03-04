@@ -1,12 +1,14 @@
+<% content_for :title do %>
+  我的主页
+<% end %>
 
-<div class="span11">
+
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
   <li class="active">User Info</li>
 </ul>
-</div>
 
-<div class="profile_box span8">
+<div class="profile span9">
   <ul class="nav nav-tabs">
     <li class="active">  <a href="#">我的主页</a> </li>
     <li><a href="#">视播分享</a></li>
@@ -16,25 +18,25 @@
     <form class="form-horizontal" style="margin-bottom: 0px;">
       <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
         <div class="controls">
-          <label class="control-label">第 <%= @user.id %> 位 会员</label>
+          <label class="home_field">第 <%= @user.id %> 位 会员</label>
         </div>
       </div>
       <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
         <label class="control-label">用户名:</label>
         <div class="controls">
-          <label class="control-label"><%= @user.name %></label>
+          <label class="home_field"><%= @user.name %></label>
         </div>
       </div>
       <div class="control-group" style="margin-bottom: 2px;border-bottom: 1px dashed #EEEEEE;">
         <label class="control-label">交易金额:</label>
         <div class="controls">
-          <label class="control-label"><%= 0 %></label>
+          <label class="home_field"><%= 0 %></label>
         </div>
       </div>
       <div class="control-group" style="margin-bottom:2px;border-bottom: 1px dashed #EEEEEE;">
         <label class="control-label">注册时间:</label>
         <div class="controls">
-          <label class="control-label"><%= @user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></label>
+          <label class="home_field"><%= @user.created_at.strftime("%Y-%m-%d %H:%M:%S") %></label>
         </div>
       </div>
     </form>
@@ -44,7 +46,7 @@
   </div>
 </div>
 
-<div class="profile_box span8">
+<div class="profile span9">
   最新视播分享
   <hr>
   <% @casts.each do |cast| %>
@@ -55,7 +57,7 @@
   <% end %>
 </div>
 
-<div class="profile_box span8">
+<div class="profile span9">
   最新评论
   <hr>
   <% @comments.each do |comment| %>

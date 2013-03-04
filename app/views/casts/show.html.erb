@@ -7,15 +7,13 @@
 <% end %>
 
 
-<div class="span11">
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
   <li class="active">Cast Show</li>
 </ul>
-</div>
 
 
-<div class="profile_box span9">
+<div class="profile span9">
 
   <div class="player">
     <%= render "player" %>
@@ -26,16 +24,19 @@
       </div>
       <div class="cast_info">
         <div class="cast_title">
-          <%= @cast.title %>
+          <h3><%= @cast.title %></h3>
+          <blockquote>
+          视频群聊和内容共享服务Rabbit刚获得330万美元的种子期融资，投资方包括Google Ventures和CrunchFund等。目前Rabbit应用只支持Mac平台。它和一般视频群聊最大不同在于，它同时也是一个屏幕内容共享服务。比如Rabbit可以很轻松地让你和一群朋友远程看电影并实时吐槽了 
+          </blockquote>
         </div>
         <div class="cast_time">
           <% unless @cast.tag_names.blank? %>
             <icon class="icon-tags"></icon>
             <%= @cast.tag_names %>
           <% end %>
-          <blockquote class="pull-right">
-            <small><%= @cast.user.name %>于<%= time_ago_in_words(@cast.created_at) %>前分享</small>
-          </blockquote>
+          <div class="pull-right">
+            — <%= @cast.user.name %>于<%= time_ago_in_words(@cast.created_at) %>前分享
+          </div>
         </div>
        </div>
     </div>
