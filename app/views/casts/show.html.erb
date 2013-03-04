@@ -9,7 +9,8 @@
 
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
-  <li class="active">Cast Show</li>
+  <li class="active">视播<span class="divider">/</span></li>
+  <li class="active"><%= @cast.title %></li>
 </ul>
 
 
@@ -71,3 +72,14 @@
     }
   }); 
 </script>
+
+
+
+<div class="rsidebar">
+  <h5 class="rsidebar_title">友情提示</h5>
+  <div class="rsidebar_content">
+    <div class="user_hint">1）若需观看，请先点击播放按钮</div>
+    <div class="user_hint">2）视频资源存储在云端，偶尔出现加载缓慢情况</div>
+    <div class="user_hint">3）凸显已付费观看用户的评论，便于了解视频的有效性</div>
+  </div>
+</div>
