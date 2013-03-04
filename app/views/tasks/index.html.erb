@@ -2,14 +2,12 @@
   任务列表
 <% end%>
 
-<div class="span11">
 <ul class="breadcrumb">
   <li><a href="<%= root_path %>">Home</a><span class="divider">/</span></li>
   <li class="active">Task List</li>
 </ul>
-</div>
 
-<div class="span8 profile_box">
+<div class="profile span9">
 
 <h4>待办任务</h4>
 <table class="table" id="todo">
@@ -39,4 +37,14 @@
 
 <%= render "form" %>
 
+</div>
+
+
+<div class="rsidebar">
+  <h5 class="rsidebar_title">友情提示</h5>
+  <div class="rsidebar_content">
+    <div class="user_hint">1）提交你在网站的发现的bug</div>
+    <div class="user_hint">2）提交你对网站的改进意见</div>
+    <div class="user_hint">3）提交你对视播的创意想法</div>
+  </div>
 </div>
