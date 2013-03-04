@@ -37,7 +37,7 @@
         <div>
           <div class="pull-left">
             <i class="icon-tags"></i> <%= cast.tag_names %>
-            <i class="icon-comment"></i> 5
+            <i class="icon-comment"></i> <%= cast.comments.size %>
           </div>
           <div class="case_auth">
             — <%= cast.user.name %>于<%= time_ago_in_words(cast.updated_at) %>前发布</p>
