@@ -2,7 +2,6 @@
 require 'json'
 require 'base64'
 require 'net/http'
-require 'juggernaut'
 require 'digest/sha2'
 require File.expand_path("../../../lib/crypt-xxtea/xxtea",__FILE__)
 
@@ -20,7 +19,6 @@ class CastsController < ApplicationController
     @upload_auth   = get_upload_token
     @upload_action = gen_action key
     @upload_key = XXTEA.encrypt(XXTEA::SKEY,key)
-    #Juggernaut.publish("/msg-#{@current_user.id}", "#{@current_user.id}");
   end
 
   def create
