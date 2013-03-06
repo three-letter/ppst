@@ -16,3 +16,9 @@
 //= require jquery-fileupload
 //= require_tree .
 
+$(function(){
+  var faye = new Faye.Client('http://pfaye.herokuapp.com/faye');
+  faye.subscribe("/", function(data){
+    alert(data);
+  });
+});

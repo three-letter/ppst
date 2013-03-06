@@ -1,3 +1,5 @@
+require 'net/http'
+
 module SessionsHelper
 
   def signin user
@@ -41,6 +43,12 @@ module SessionsHelper
                                     :callback_body_type   =>  "application/x-www-form-urlencoded",
                                     :customer             =>  current_user.id.to_s,
                                     :escape               =>  1
+  end
+
+  def broadcast(channel, &block)
+    msg = { :channel => channel, :data => capture(&block), :ext => {:auth_token => FAYE_TOKEN}}
+    uri = URI.parse("http://pfaye.herokuapp.com/faye")
+    Net::HTTP.post_form(uri, :message => msg.to_json)
   end
 
   def gen_action key
