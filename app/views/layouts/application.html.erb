@@ -40,7 +40,8 @@
             </form>
 
             <ul class="nav pull-right">
-              
+            
+            <%= hidden_field_tag :current_user_id, sign_in? ? current_user.id : 0 %>              
             <% unless sign_in? %>
               <ul class="nav actions">
                 <li><a href="<%= login_path %>" data-link="modal" data-target="#login-modal">Login</a></li>

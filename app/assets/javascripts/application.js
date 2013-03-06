@@ -17,8 +17,11 @@
 //= require_tree .
 
 $(function(){
-  var faye = new Faye.Client('http://pfaye.herokuapp.com/faye');
-  faye.subscribe("/", function(data){
-    alert(data);
-  });
+  var user_id = $("#current_user_id").val();
+  if(user_id > 0){
+    var faye = new Faye.Client('http://pfaye.herokuapp.com/faye');
+    faye.subscribe("/users/" + user_id, function(data){
+      eval(data);
+    });
+  }
 });
