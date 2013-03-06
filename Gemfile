@@ -6,9 +6,7 @@ gem "paperclip", "~> 3.0"
 gem "pry", :group => :development
 gem "qiniu-rs"
 gem "jquery-fileupload-rails"
-gem "juggernaut"
 
-gem "faye"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
