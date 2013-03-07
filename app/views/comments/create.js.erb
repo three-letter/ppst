@@ -1,6 +1,8 @@
 
-<% broadcast "/users/#{@comment.cast.user.id}" do %>
-  $("#sys_msg").html(parseInt($("#sys_msg").html()) + 1); 
+<% @at_users.each do |at| %>
+  <% broadcast "/users/#{at.id}" do %>
+    $("#sys_msg").html(parseInt($("#sys_msg").html()) + 1); 
+  <% end %>
 <% end %>
 
 <% if @comment.errors.blank? %>

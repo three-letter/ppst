@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @cast.comments.build(params[:comment].merge(user_id: current_user.id))
     flash[:notice_comment] = "评论成功" if @comment.save
+    scan_user(@comment.content)
     respond_to do |format|
       format.js
     end
@@ -26,5 +27,11 @@ class CommentsController < ApplicationController
       end
     end
 
+    def scan_user textarea
+      names = textarea.scan(/@([^@]+?)\s+/).flatten
+      return [] if names.size == 0
+      names.delete(@current_user.name)
+      @at_users = User.where(:name => names)
+    end
 
 end

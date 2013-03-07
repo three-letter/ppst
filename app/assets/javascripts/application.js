@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require jquery-fileupload
+//= require jquery.atwho
 //= require_tree .
 
 $(function(){
@@ -24,4 +25,24 @@ $(function(){
       eval(data);
     });
   }
+
+  function scan_user(){
+    var discuss_users = {} ;
+    var names = [] ;
+    $(".cast_discuss_user").each(function(){
+      var u_name = $(this).text();
+      discuss_users[u_name] = u_name;
+    });
+    var index = 0;
+    for(key in discuss_users){
+      names[index] = key;
+      index += 1;
+    }
+    return names;
+  }
+
+  $("#comment_content").atwho("@", {
+    data: scan_user()
+  })
+
 });

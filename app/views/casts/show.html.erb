@@ -36,7 +36,7 @@
             <%= @cast.tag_names %>
           <% end %>
           <div class="pull-right">
-            — <%= @cast.user.name %>于<%= time_ago_in_words(@cast.created_at) %>前分享
+            — <font class="cast_discuss_user" id="<%= @cast.user.name %>"><%= @cast.user.name %></font>于<%= time_ago_in_words(@cast.created_at) %>前分享
           </div>
         </div>
        </div>

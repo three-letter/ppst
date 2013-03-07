@@ -6,6 +6,7 @@ gem "paperclip", "~> 3.0"
 gem "pry", :group => :development
 gem "qiniu-rs"
 gem "jquery-fileupload-rails"
+gem "jquery-atwho-rails"
 
 
 # Bundle edge Rails instead:

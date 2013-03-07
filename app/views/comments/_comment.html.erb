@@ -11,7 +11,7 @@
 
     <div class="cast_time">
       <blockquote class="pull-right">
-        <small><%= comment.user.name %>, <%= time_ago_in_words(comment.created_at) %>前</small>
+        <small><font class="cast_discuss_user" id="<%= comment.user.id %>"><%= comment.user.name %></font>, <%= time_ago_in_words(comment.created_at) %>前</small>
       </blockquote>
     </div>
   </div>
