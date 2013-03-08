@@ -29,9 +29,12 @@ class CommentsController < ApplicationController
 
     def scan_user textarea
       names = textarea.scan(/@([^@]+?)\s+/).flatten
-      return [] if names.size == 0
-      names.delete(@current_user.name)
-      @at_users = User.where(:name => names)
+      @at_users = [] 
+      if names.size > 0
+        names.delete(@current_user.name)
+        @at_users = User.where(:name => names)
+      end
+      @at_users << @cast.user
     end
 
 end
