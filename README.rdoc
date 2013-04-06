@@ -1,5 +1,5 @@
 == PPST
 PPST(link:http://ppst.herokuapp.com/) 是一个以视频为媒介的在线编程教育分享和交易的web应用平台。
 
-视频和图片的存储使用了云存储七牛云(link:http://www.qiniutek.com/)，应用部署在 heroku(link:https://www.heroku.com/)
+视频和图片的存储使用了云存储七牛云(link:http://www.qiniutek.com/)，应用部署在 heroku(link:https://www.heroku.com/).
 
